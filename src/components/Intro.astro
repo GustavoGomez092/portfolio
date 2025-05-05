@@ -1,0 +1,36 @@
+<section class="intro">
+
+</section>
+
+<script>
+  import gsap from "gsap";
+  import { LifecycleManager } from "../scripts/animationLifecycle.ts"
+
+  const manager = new LifecycleManager();
+
+  manager.onElementLoaded(".intro", () => {
+    manager.ctx?.add(()=> {
+        gsap.timeline()
+        .set(".intro", { opacity: 1 })
+        .to(
+        ".intro",
+        {
+          duration: 1,
+          opacity: 0,
+          delay: 1,
+          ease: "power2.inOut",
+        }
+      );
+    }
+  )
+})
+
+</script>
+
+
+<style>
+  section.intro {
+    @reference '../styles/global.css';
+    @apply absolute top-0 left-0 overflow-hidden w-full h-screen flex items-center justify-center bg-[#EFEBE4] z-50;
+  }
+</style>

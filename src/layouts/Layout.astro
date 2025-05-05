@@ -1,22 +1,35 @@
+---
+import "../styles/global.css";
+
+import Logo from "../assets/img/logo.svg?url";
+
+import { ClientRouter } from "astro:transitions";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import Intro from "../components/Intro.astro";
+import SmoothScroll from "../components/SmoothScroll.astro";
+---
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<ClientRouter />
+		<link rel="icon" type="image/svg+xml" href={Logo} />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>Gustavo Gomez - Full Stack Developer</title>
 	</head>
 	<body>
+		<SmoothScroll />
+		<Intro />
+		<Header />
 		<slot />
+		<Footer />
 	</body>
 </html>
 
 <style>
-	html,
 	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
+		@apply bg-[#EFEBE4];
 	}
 </style>

@@ -1,0 +1,73 @@
+---
+import { Image } from "astro:assets";
+import Logo from "../assets/img/logo.svg";
+import menu from "../collections/menu.json";
+---
+
+<nav>
+  <div class="logo-area">
+    <a href="#home" class="logo">
+      <Image src={Logo} width={50} height={50} alt="Logo" /><span>Gustavo Gomez</span>
+    </a>
+  </div>
+  <div class="menu">
+    <ul class="menu-list">
+      {
+        menu.menuItems.map((item) => {
+          return (
+            <li class="menu-item">
+              <a href={item.url}>{item.name}</a>
+            </li>
+          )
+        })
+      }
+    </ul>
+  </div>
+  <div class="call-to-action">
+    <a href="" class="btn">Download Resume</a>
+    <a href="#contact" class="btn">Contact Me</a>
+  </div>
+</nav>
+
+<script>
+  import gsap from "gsap";
+
+  
+
+</script>
+
+<style>
+  @reference '../styles/global.css';
+  nav {
+    @apply w-full mx-auto;
+    @apply flex w-full justify-between items-center py-4 px-8 h-[90px];
+    .logo-area {
+      @apply flex items-center;
+      .logo {
+        @apply flex items-center gap-2 text-2xl font-bold text-gray-800;
+        img {
+          @apply w-10 h-10;
+        }
+      }
+    }
+    .menu {
+      .menu-list {
+        @apply flex flex-row gap-10;
+        .menu-item {
+          a {
+            @apply text-xl;
+          }
+        }
+      }
+    }
+    .call-to-action {
+      @apply flex gap-8;
+      .btn {
+        @apply text-xl opacity-50 transition-all duration-300 ease-in-out;
+        &:hover {
+          @apply opacity-100;
+        }
+      }
+    }
+  }
+</style>

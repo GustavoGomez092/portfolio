@@ -1,0 +1,29 @@
+---
+import '@fontsource/meddon';
+
+---
+
+
+<section class="site-hero">
+  <div class="main-section">
+    <h1>Gustavo <span class="last-name">Gómez</span></h1>
+  </div>
+</section>
+
+<style>
+  @reference '../styles/global.css';
+
+  .site-hero {
+    @apply w-full h-[calc(100vh_-_180px)] flex items-center justify-center;
+    .main-section {
+      @apply text-center;
+      h1 {
+        @apply text-[100px] font-normal text-black;
+        span.last-name {
+          font-family: 'Meddon', cursive;
+          @apply text-[90px]
+        }
+      }
+    }
+  }
+</style>
