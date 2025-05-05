@@ -1,48 +1,144 @@
-# Astro Starter Kit: Basics
+# Portfolio
 
-```sh
-npm create astro@latest -- --template basics
+A personal portfolio website built with [Astro](https://astro.build), showcasing projects and skills with smooth animations and optimized performance.
+
+---
+
+## Table of Contents
+
+- [Demo](#demo)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Getting Started](#getting-started)
+
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Available Scripts](#available-scripts)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+
+---
+
+## Demo
+
+A live demo of this portfolio is available at: `https://your-domain.com`
+
+_(Replace with your actual deployed URL)_
+
+---
+
+## Features
+
+- **Responsive Design**: Mobile-first, fully responsive layouts.
+- **Smooth Scrolling**: Powered by [Lenis](https://github.com/studio-freight/lenis).
+- **Animations**: Scroll- and trigger-based animations using [GSAP](https://greensock.com/gsap/).
+- **Performance Optimization**: Third-party scripts loaded via [Astro Partytown](https://docs.astro.build/en/guides/partytown/) offloading.
+- **Sitemap Generation**: Automatic sitemap with [@astrojs/sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap).
+
+---
+
+## Technologies Used
+
+- [Astro](https://astro.build) (v5.x)
+- [TypeScript](https://www.typescriptlang.org)
+- [Tailwind CSS](https://tailwindcss.com) (v4.x)
+- [GSAP](https://greensock.com/gsap/) (v3.x)
+- [Lenis](https://github.com/studio-freight/lenis)
+- [Astro Partytown](https://docs.astro.build/en/guides/partytown/)
+- [Astro Sitemap](https://github.com/withastro/astro/tree/main/packages/integrations/sitemap)
+- [@fontsource/meddon](https://github.com/fontsource/fontsource/tree/main/packages/meddon)
+- [@fontsource/pretendard](https://github.com/fontsource/fontsource/tree/main/packages/pretendard)
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) v18 or higher
+- [npm](https://www.npmjs.com/) (v8+) or [pnpm](https://pnpm.io/)
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/GustavoGomez092/portfolio.git
+   cd portfolio
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+---
+
+## Usage
+
+- **Start development server**:
+
+  ```bash
+  npm run dev
+  ```
+
+- **Build for production**:
+
+  ```bash
+  npm run build
+  ```
+
+- **Preview production build locally**:
+
+  ```bash
+  npm run preview
+  ```
+
+---
+
+## Project Structure
+
 ```
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
 /
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+├── public/             # Static assets (images, favicon, etc.)
+├── src/                # Source files
+│   ├── components/     # Reusable UI components
+│   ├── layouts/        # Layouts and templates
+│   ├── pages/          # Astro pages (routes)
+│   └── styles/         # Global styles and Tailwind config
+├── astro.config.mjs    # Astro configuration file
+├── package.json        # Project metadata and scripts
+├── tsconfig.json       # TypeScript configuration
+└── README.md           # Project documentation
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+---
 
-## 🧞 Commands
+## Available Scripts
 
-All commands are run from the root of the project, from a terminal:
+| Script            | Description                                |
+| ----------------- | ------------------------------------------ |
+| `npm run dev`     | Start local dev server at `localhost:3000` |
+| `npm run build`   | Build for production (output to `dist/`)   |
+| `npm run preview` | Preview production build locally           |
+| `npm run astro`   | Run Astro CLI commands (e.g., `astro add`) |
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+---
 
-## 👀 Want to learn more?
+## License
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## Contact
+
+**Gustavo Gomez** – [@GustavoGomez092](https://github.com/GustavoGomez092)
+
+Project Link: [https://github.com/GustavoGomez092/portfolio](https://github.com/GustavoGomez092/portfolio)
