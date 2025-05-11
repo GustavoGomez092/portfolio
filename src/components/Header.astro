@@ -15,7 +15,7 @@ import menu from "../collections/menu.json";
       {
         menu.menuItems.map((item) => {
           return (
-            <li class="menu-item">
+            <li class="menu-item hoverable">
               <a href={item.url}>{item.name}</a>
             </li>
           )
@@ -24,23 +24,23 @@ import menu from "../collections/menu.json";
     </ul>
   </div>
   <div class="call-to-action">
-    <a href="" class="btn">Download Resume</a>
-    <a href="#contact" class="btn">Contact Me</a>
+    <a href="" class="btn hoverable">Download Resume</a>
+    <a href="#contact" class="btn hoverable">Contact Me</a>
   </div>
 </nav>
 
 <script>
   import gsap from "gsap";
   import { LifecycleManager } from "../scripts/animationLifecycle.ts"
-  import { $introComplete } from '../stores/introStore';
-  import { initSmoothScrolling } from "../scripts/smoothScroll.ts";
+  import { $smoothScroll } from "../stores/smoothScrollStore";
 
-  const SmoothScroll = initSmoothScrolling();
+ 
   const manager = new LifecycleManager();
-  const header = document.querySelector("nav");
 
-  const headerAnimation = () => {
+
     manager.onElementLoaded("nav", () => {
+      const header = document.querySelector("nav");
+      $smoothScroll.value.stop()
       manager.ctx?.add(() => {
         gsap.timeline()
           .set(header, { opacity: 0 })
@@ -50,23 +50,13 @@ import menu from "../collections/menu.json";
             delay: 4.5,
             ease: "power2.inOut",
             onComplete: () => {
-              SmoothScroll.start();
+              $smoothScroll.value.start();
             }
           })
       })
     })
-  }
-  $introComplete.subscribe((isComplete) => {
-    if (isComplete) {
-      headerAnimation();
-    }
-  })
-  
-  if($introComplete) {
-    headerAnimation();
-  }
 
-  SmoothScroll.stop()
+
 
 </script>
 

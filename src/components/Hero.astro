@@ -21,73 +21,65 @@ import '@fontsource/meddon';
 <script>
   import gsap from 'gsap';
   import { LifecycleManager } from "../scripts/animationLifecycle.ts"
-  import { $introComplete } from '../stores/introStore';
   import SplitType from 'split-type';
 
-const manager = new LifecycleManager();
+    const manager = new LifecycleManager();
 
-const greeting = document.querySelector('.greeting');
-const firstName = document.querySelector('.first-name');
+      manager.onElementLoaded(".site-hero", () => {
 
+        const greeting = document.querySelector('.greeting');
+        const firstName = document.querySelector('.first-name');
+        const splitFirstName = new SplitType(firstName as HTMLElement, {
+          types: 'lines,words',
+          tagName: 'span',
+        });
+        const firstNameWidth = gsap.getProperty(firstName, "width");
 
-const splitFirstName = new SplitType(firstName as HTMLElement, {
-  types: 'lines,words',
-  tagName: 'span',
-});
-
-const heroAnimation = () => {
-
-  const firstNameWidth = gsap.getProperty(firstName, "width");
-
-  manager.onElementLoaded(".site-hero", () => {
-    manager.ctx?.add(() => {
-      gsap.timeline()
-        .set(greeting, { opacity: 0 })
-        .set(firstName, { x: `${firstNameWidth as number/5}px)` })
-        .set(splitFirstName.words, { opacity: 0, y: '110%' })
-        .set('.video-1', { opacity: 0 })
-        .to(greeting, {
-          duration: 1,
-          opacity: 1,
-          ease: "power2.inOut",
+        manager.ctx?.add(() => {
+          gsap.timeline()
+            .set(greeting, { opacity: 0 })
+            .set(firstName, { x: `${firstNameWidth as number/5}px)` })
+            .set(splitFirstName.words, { opacity: 0, y: '110%' })
+            .set('.video-1', { opacity: 0 })
         })
-        .to(splitFirstName?.words ? [splitFirstName.words[0], splitFirstName.words[1]] : [], {
-          duration: 1,
-          opacity: 1,
-          y: '0%',
-          stagger: 0.3,
-          delay: 1,
-          ease: "power2.inOut",
+        manager.ctx?.add(() => {
+          gsap.timeline()
+            .set(greeting, { opacity: 0 })
+            .set(firstName, { x: `${firstNameWidth as number/5}px)` })
+            .set(splitFirstName.words, { opacity: 0, y: '110%' })
+            .set('.video-1', { opacity: 0 })
+            .to(greeting, {
+              duration: 1,
+              opacity: 1,
+              ease: "power2.inOut",
+            })
+            .to(splitFirstName?.words ? [splitFirstName.words[0], splitFirstName.words[1]] : [], {
+              duration: 1,
+              opacity: 1,
+              y: '0%',
+              stagger: 0.3,
+              delay: 1,
+              ease: "power2.inOut",
+            })
+            .to(firstName, {
+              x: -10,
+              duration: 1,
+              ease: "power2.inOut",
+            })
+            .to(splitFirstName?.words && splitFirstName.words[2] ? [splitFirstName.words[2]] : [], {
+              duration: 1,
+              opacity: 1,
+              y: '0%',
+              ease: "power2.inOut",
+            }, "-=0.5")
+            .to('.video-1', {
+              duration: 1,
+              opacity: 1,
+              ease: "power2.inOut",
+            })
         })
-        .to(firstName, {
-          x: -10,
-          duration: 1,
-          ease: "power2.inOut",
-        })
-        .to(splitFirstName?.words && splitFirstName.words[2] ? [splitFirstName.words[2]] : [], {
-          duration: 1,
-          opacity: 1,
-          y: '0%',
-          ease: "power2.inOut",
-        }, "-=0.5")
-        .to('.video-1', {
-          duration: 1,
-          opacity: 1,
-          ease: "power2.inOut",
-        })
-    })
-  })
-}
+      })
 
-$introComplete.subscribe((isComplete)=>{
-  if (isComplete) {
-    heroAnimation()
-  }
-})
-
-if ($introComplete) {
-  heroAnimation()
-}
 
 </script>
 

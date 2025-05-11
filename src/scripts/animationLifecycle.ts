@@ -44,7 +44,10 @@ export class LifecycleManager {
     if (!this.boundPageLoadHandlers.has(id)) {
       const handler = () => this.onPageLoad(id, callback)
       this.boundPageLoadHandlers.set(id, handler)
-      document.addEventListener("astro:page-load", handler)
+
+      document.addEventListener("astro:page-load", () => {
+        return handler()
+      })
     }
   }
 
