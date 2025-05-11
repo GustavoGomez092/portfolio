@@ -1,73 +1,154 @@
-<div class="cursor"></div>
+<div class="cursor">
+	<div class="cursor__circle cursor__circle--big ">
+		<svg height="60" width="60">
+			<circle id="bigCircle" cx="30" cy="30"  r="18" stroke-width="0.8"></circle>
+		</svg>
+	</div>
+
+	<div class="cursor_circle cursor__circle--small">
+		<svg height="10" width="10">
+			<circle cx="4" cy="4" r="3" stroke-width="0"></circle>
+		</svg>
+	</div>
+
+	<div class="cursor__plus">
+		<svg
+			  class="cursor__plus--area"
+			  width="24"
+			  height="24"
+			  viewBox="0 0 24 24"
+			  xmlns="http://www.w3.org/2000/svg"
+			  >
+			<g stroke-width="1">
+				<path
+						d="M12.5,1.87037037 L12.5,11.4993704 L22.5,11.5 L22.5,12.5 L12.5,12.4993704 L12.5,22.1296296 L11.5,22.1296296 L11.5,12.4993704 L1.5,12.5 L1.5,11.5 L11.5,11.4993704 L11.5,1.87037037 L12.5,1.87037037 Z"
+						></path>
+			</g>
+		</svg>
+	</div>
+</div>
 
 <script>
-  document.addEventListener("astro:page-load", ()=> {
-    console.log("Page loaded");
-    const cursor = document.querySelector(".cursor")
+  import gsap from 'gsap';
 
-    document.addEventListener("mousemove", (e) => {
-      cursor?.setAttribute(
-        "style",
-        "top: " + (e.pageY - 10) + "px; left: " + (e.pageX - 10) + "px;"
-      )
-    })
+  document.addEventListener("astro:page-load", () => {
 
-    document.addEventListener("click", (e) => {
-      cursor?.classList.add("expand")
-      setTimeout(() => {
-        cursor?.classList.remove("expand")
-      }, 500)
+  const $bigCircle = document.querySelector('.cursor__circle--big');
+  const $smallCircle = document.querySelector('.cursor__circle--small');
+  const $smallPlus = document.querySelector('.cursor__plus');
+  const $smallPlusArea = document.querySelector('.cursor__plus--area')
+  const $hoverables = document.querySelectorAll('.hoverable');
+  const hoverablesArea = document.querySelectorAll('.hoverableArea');
+
+  // Listeners
+  document.body.addEventListener('mousemove', onMouseMove);
+
+  for (let i = 0; i < $hoverables.length; i++) {
+    $hoverables[i].addEventListener('mouseenter', onMouseHover);
+    $hoverables[i].addEventListener('mouseleave', onMouseHoverOut);
+  }
+
+  for (let i = 0; i < hoverablesArea.length; i++) {
+    hoverablesArea[i].addEventListener('mouseenter', onMouseHoverArea);
+    hoverablesArea[i].addEventListener('mouseleave', onMouseHoverAreaOut);
+  }
+
+  // Move the cursor
+  function onMouseMove(e:MouseEvent) {
+    gsap.to($bigCircle, .4, {
+      x: e.clientX,
+      y: e.clientY
     })
+    gsap.to($smallCircle, .1, {
+      x: e.clientX,
+      y: e.clientY
+    })
+    gsap.to($smallPlus, .1, {
+      x: e.clientX,
+      y: e.clientY
+    })
+  }
+
+  // Hover an element
+  function onMouseHover() {
+    gsap.to('#bigCircle', {
+      attr: {
+        r: 25
+      }
+    })
+  }
+  function onMouseHoverOut() {
+    gsap.to('#bigCircle', {
+      attr: {
+        r: 18
+      }
+    })
+  }
+
+  // Hover img an element
+  function onMouseHoverArea() {
+    gsap.to($bigCircle, .3, {
+      fill: '#212121',
+      mixBlendMode: 'normal'
+    })
+    gsap.to($smallCircle, .3, {
+      fill: 'transparent'
+    })
+    gsap.to($smallPlusArea, 0.3, {
+      stroke: '#DEDEDE'
+    })
+  }
+  function onMouseHoverAreaOut() {
+    gsap.to($bigCircle, 0.3, {
+      fill: 'transparent',
+      mixBlendMode: 'difference'
+    })
+    gsap.to($smallCircle, 0.3, {
+      fill: '#DEDEDE'
+    })
+    gsap.to($smallPlusArea, 0.3, {
+      stroke: 'transparent'
+    })
+  }
+  
   })
 
 </script>
 
 <style>
-    .cursor {
-    display: block;
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%);
-    border-radius: 50%;
-    background: transparent;
-    pointer-events: none;
-    z-index: 111;
-    border: 1px solid black;
-    transition: all 0.2s ease-out;
-    animation: moveCursor1 0.5s infinite alternate;
-  }
-
-  .expand {
-    background: transparent;
-    animation: moveCursor2 0.5s forwards;
-    border: 1px solid white;
-  }
-
-  @keyframes moveCursor1 {
-    from {
-      transform: scale(1);
-    }
-
-    to {
-      transform: scale(0.8);
-    }
-  }
-
-  @keyframes moveCursor2 {
-    0% {
-      transform: scale(1);
-    }
-
-    50% {
-      transform: scale(2.5);
-    }
-
-    100% {
-      transform: scale(1);
-      opacity: 0;
-    }
-  }
+body .cursor {
+  pointer-events: none;
+}
+body .cursor__circle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  mix-blend-mode: difference;
+  z-index: 10;
+  transform: translateX(-50%) translateY(-50%);
+}
+body .cursor__circle--big {
+  stroke: #dedede;
+  fill: transparent;
+  mix-blend-mode: difference;
+  transform: translateX(-50%) translateY(-50%);
+}
+body .cursor__circle--small {
+  fill: #dedede;
+  mix-blend-mode: difference;
+  transform: translateX(0%) translateY(-50%);
+}
+body .cursor__plus {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  stroke: transparent;
+  fill: transparent;
+  mix-blend-mode: normal;
+  transform: translateX(-50%) translateY(-50%);
+}
+body .cursor__plus--area {
+  stroke: transparent;
+}
 </style>
