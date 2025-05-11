@@ -34,9 +34,7 @@ import menu from "../collections/menu.json";
   import { LifecycleManager } from "../scripts/animationLifecycle.ts"
   import { $introComplete } from '../stores/introStore';
   import { initSmoothScrolling } from "../scripts/smoothScroll.ts";
-  import initMagicMouse from "../scripts/magicMouse";
 
-  initMagicMouse();
   const SmoothScroll = initSmoothScrolling();
   const manager = new LifecycleManager();
   const header = document.querySelector("nav");
