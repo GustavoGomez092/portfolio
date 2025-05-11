@@ -7,7 +7,6 @@ import { ClientRouter } from "astro:transitions";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import Intro from "../components/Intro.astro";
-import SmoothScroll from "../components/SmoothScroll.astro";
 ---
 <!doctype html>
 <html lang="en">
@@ -20,7 +19,6 @@ import SmoothScroll from "../components/SmoothScroll.astro";
 		<title>Gustavo Gomez - Full Stack Developer</title>
 	</head>
 	<body>
-		<SmoothScroll />
 		<Intro />
 		<Header />
 		<slot />
@@ -30,6 +28,6 @@ import SmoothScroll from "../components/SmoothScroll.astro";
 
 <style>
 	body {
-		@apply bg-[#EFEBE4];
+		@apply bg-[#f3f4f6];
 	}
 </style>

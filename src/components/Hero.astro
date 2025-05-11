@@ -5,23 +5,112 @@ import '@fontsource/meddon';
 
 
 <section class="site-hero">
+  <div class="video-backgound">
+    <div class="video-1">
+      <video autoplay="" muted="" loop="" poster="https://d2pas86kykpvmq.cloudfront.net/landings/glass-abstract-vol2/light.avif" oncontextmenu="return false;" class="color-img">
+        <source type="video/mp4" src="https://d2pas86kykpvmq.cloudfront.net/landings/glass-abstract-vol2/light-v4.mp4">
+      </video>
+    </div>
+  </div>
   <div class="main-section">
-    <h1>Gustavo <span class="last-name">Gómez</span></h1>
+    <h1><span class="greeting">Hi!</span><br/><span class="first-name"> I'm
+      Gustavo Gómez</span></h1>
   </div>
 </section>
+
+<script>
+  import gsap from 'gsap';
+  import { LifecycleManager } from "../scripts/animationLifecycle.ts"
+  import { $introComplete } from '../stores/introStore';
+  import SplitType from 'split-type';
+
+const manager = new LifecycleManager();
+
+const greeting = document.querySelector('.greeting');
+const firstName = document.querySelector('.first-name');
+
+
+const splitFirstName = new SplitType(firstName as HTMLElement, {
+  types: 'lines,words',
+  tagName: 'span',
+});
+
+const heroAnimation = () => {
+
+  const firstNameWidth = gsap.getProperty(firstName, "width");
+
+  manager.onElementLoaded(".site-hero", () => {
+    manager.ctx?.add(() => {
+      gsap.timeline()
+        .set(greeting, { opacity: 0 })
+        .set(firstName, { x: `${firstNameWidth as number/5}px)` })
+        .set(splitFirstName.words, { opacity: 0, y: '110%' })
+        .set('.video-1', { opacity: 0 })
+        .to(greeting, {
+          duration: 1,
+          opacity: 1,
+          ease: "power2.inOut",
+        })
+        .to(splitFirstName?.words ? [splitFirstName.words[0], splitFirstName.words[1]] : [], {
+          duration: 1,
+          opacity: 1,
+          y: '0%',
+          stagger: 0.3,
+          delay: 1,
+          ease: "power2.inOut",
+        })
+        .to(firstName, {
+          x: -10,
+          duration: 1,
+          ease: "power2.inOut",
+        })
+        .to(splitFirstName?.words && splitFirstName.words[2] ? [splitFirstName.words[2]] : [], {
+          duration: 1,
+          opacity: 1,
+          y: '0%',
+          ease: "power2.inOut",
+        }, "-=0.5")
+        .to('.video-1', {
+          duration: 1,
+          opacity: 1,
+          ease: "power2.inOut",
+        })
+    })
+  })
+}
+
+$introComplete.subscribe((isComplete)=>{
+  if (isComplete) {
+    heroAnimation()
+  }
+})
+
+if ($introComplete) {
+  heroAnimation()
+}
+
+</script>
 
 <style>
   @reference '../styles/global.css';
 
   .site-hero {
-    @apply w-full h-[calc(100vh_-_180px)] flex items-center justify-center;
+    @apply w-full h-[calc(100vh_-_200px)] flex items-center justify-center;
+    .video-backgound {
+      @apply absolute top-0 left-0 w-full h-full -z-10;
+      .video-1 {
+        @apply w-40 h-40 relative left-60 top-60;
+      }
+    }
     .main-section {
       @apply text-center;
       h1 {
-        @apply text-[100px] font-normal text-black;
-        span.last-name {
-          font-family: 'Meddon', cursive;
-          @apply text-[90px]
+        @apply text-[100px] font-black leading-tight text-black;
+        span {
+          @apply inline-block;
+          &.line {
+            @apply overflow-hidden;
+          }
         }
       }
     }
