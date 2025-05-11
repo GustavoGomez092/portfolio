@@ -70,4 +70,10 @@
 
 body {
   font-family: "Pretendard", sans-serif;
+  #magicMouseCursor {
+    border: 1px solid #000000 !important;
+  }
+  #magicPointer {
+    background: var(--color-black) !important;
+  }
 }

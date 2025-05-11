@@ -31,8 +31,44 @@ import menu from "../collections/menu.json";
 
 <script>
   import gsap from "gsap";
+  import { LifecycleManager } from "../scripts/animationLifecycle.ts"
+  import { $introComplete } from '../stores/introStore';
+  import { initSmoothScrolling } from "../scripts/smoothScroll.ts";
+  import initMagicMouse from "../scripts/magicMouse";
 
+  initMagicMouse();
+  const SmoothScroll = initSmoothScrolling();
+  const manager = new LifecycleManager();
+  const header = document.querySelector("nav");
+
+  const headerAnimation = () => {
+    manager.onElementLoaded("nav", () => {
+      manager.ctx?.add(() => {
+        gsap.timeline()
+          .set(header, { opacity: 0 })
+          .to(header, {
+            duration: 1,
+            opacity: 1,
+            delay: 4.5,
+            ease: "power2.inOut",
+            onComplete: () => {
+              SmoothScroll.start();
+            }
+          })
+      })
+    })
+  }
+  $introComplete.subscribe((isComplete) => {
+    if (isComplete) {
+      headerAnimation();
+    }
+  })
   
+  if($introComplete) {
+    headerAnimation();
+  }
+
+  SmoothScroll.stop()
 
 </script>
 

@@ -1,5 +1,6 @@
 import Lenis from "lenis"
 import { gsap } from "gsap"
+import { setSmoothscroll } from "../stores/smoothScrollStore"
 
 // Initializes smooth scrolling with Lenis.
 // Function to set up smooth scrolling.
@@ -14,4 +15,8 @@ export const initSmoothScrolling = () => {
 
   // Turn off GSAP's default lag smoothing to avoid conflicts with Lenis.
   gsap.ticker.lagSmoothing(0)
+
+  setSmoothscroll(lenis)
+
+  return lenis
 }
