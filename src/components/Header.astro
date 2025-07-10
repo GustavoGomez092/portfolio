@@ -1,13 +1,13 @@
 ---
-import { Image } from "astro:assets";
-import Logo from "../assets/img/logo.svg";
-import menu from "../collections/menu.json";
+import { Image } from "astro:assets"
+import Logo from "../assets/img/logo.svg"
+import menu from "../collections/menu.json"
 ---
 
 <nav>
   <div class="logo-area">
-    <a href="#home" class="logo">
-      <Image src={Logo} width={50} height={50} alt="Logo" /><span>Gustavo Gomez</span>
+    <a href="#home" class="logo hoverable">
+      <Image src={Logo} width={50} height={50} alt="Logo" />
     </a>
   </div>
   <div class="menu">
@@ -30,47 +30,60 @@ import menu from "../collections/menu.json";
 </nav>
 
 <script>
-  import gsap from "gsap";
+  import gsap from "gsap"
   import { LifecycleManager } from "../scripts/animationLifecycle.ts"
-  import { $smoothScroll } from "../stores/smoothScrollStore";
+  import { $smoothScroll } from "../stores/smoothScrollStore"
+  import { $introComplete } from "../stores/introStore"
 
- 
-  const manager = new LifecycleManager();
+  const manager = new LifecycleManager()
 
-
-    manager.onElementLoaded("nav", () => {
-      const header = document.querySelector("nav");
-      $smoothScroll.value.stop()
-      manager.ctx?.add(() => {
-        gsap.timeline()
-          .set(header, { opacity: 0 })
-          .to(header, {
-            duration: 1,
-            opacity: 1,
-            delay: 4.5,
-            ease: "power2.inOut",
-            onComplete: () => {
-              $smoothScroll.value.start();
-            }
-          })
-      })
+  const animateHeader = (header:HTMLElement) => {
+    manager.ctx?.add(() => {
+      gsap
+        .timeline()
+        .to(header, {
+          duration: 1,
+          opacity: 1,
+          delay: 0,
+          ease: "power2.inOut",
+          onComplete: () => {
+            $smoothScroll.value.start()
+          },
+        })
     })
+  }
 
-
-
+  manager.onElementLoaded("nav", () => {
+    const header = document.querySelector("nav")
+    if (!header) return
+    // gsap.set(header, { opacity: 0 })
+    $smoothScroll.value.stop()
+    $introComplete.listen(() => {
+    if ($introComplete.get()) {
+        animateHeader(header)
+      } else {
+        return
+      }
+    })
+    if ($introComplete.get()) {
+      animateHeader(header)
+    } else {
+      return
+    }
+  })
 </script>
 
 <style>
   @reference '../styles/global.css';
   nav {
-    @apply w-full mx-auto;
-    @apply flex w-full justify-between items-center py-4 px-8 h-[90px];
+    @apply w-full max-w-screen mx-auto;
+    @apply flex flex-col lg:flex-row justify-between items-center py-4 px-8 h-[90px] space-y-4;
     .logo-area {
       @apply flex items-center;
       .logo {
         @apply flex items-center gap-2 text-2xl font-bold text-gray-800;
         img {
-          @apply w-10 h-10;
+          @apply w-14 h-14;
         }
       }
     }

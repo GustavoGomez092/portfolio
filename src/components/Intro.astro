@@ -1,36 +1,66 @@
 <section class="intro">
-
+  <div class="lottie-intro-container"></div>
 </section>
 
 <script>
+  import Lottie from "lottie-web";
+  import animation from "../assets/lottie/intro.json";
   import gsap from "gsap";
-  import { setIntroComplete } from "../stores/introStore";
+  import { setIntroComplete, $introComplete } from "../stores/introStore";
   import { LifecycleManager } from "../scripts/animationLifecycle.ts"
 
   const manager = new LifecycleManager();
 
   manager.onElementLoaded(".intro", () => {
-    manager.ctx?.add(()=> {
-        gsap.timeline()
-        .set(".intro", { opacity: 1 })
-        .to(
-        ".intro",
-        {
-          duration: 1,
-          opacity: 0,
-          delay: 1,
-          ease: "power2.inOut",
-          onComplete: () => {
-            setIntroComplete(true);
-            const el = document.querySelector(".intro");
-            if (el) {
-              el.remove();
+    if( $introComplete.get()) {
+      const el = document.querySelector(".intro");
+      if (el) {
+        el.remove();
+      }
+      return;
+    } else {
+    const lottieContainer = document.querySelector(".lottie-intro-container");
+    if (!lottieContainer) return;
+    const LottieAnimation = Lottie.loadAnimation({
+      container: lottieContainer,
+      renderer: "svg",
+      loop: false,
+      autoplay: true,
+      animationData: animation,
+    });
+    manager.ctx?.add(() => {
+      const logoLeft = document.querySelector(".logo-area")?.getBoundingClientRect().left || 0;
+      console.log("logoLeft", logoLeft);
+          gsap.timeline()
+            .set(".intro", { opacity: 1 })
+            .to(lottieContainer, {
+              top:  window.innerWidth < 1024 ? 23 : 16,
+              left: window.innerWidth < 1024 ? logoLeft-3 : 29,
+              delay: 2.5,
+              width: 59,
+              height: 59,
+              duration: 1,
+            }).to(
+            ".intro",
+            {
+              duration: 1,
+              opacity: 0,
+              delay: 0,
+              ease: "power2.inOut",
+              onComplete: () => {
+                // setIntroComplete(true);
+                LottieAnimation.destroy();
+                const el = document.querySelector(".intro");
+                if (el) {
+                  el.remove();
+                }
+              },
             }
-          },
+          );
         }
-      );
+      )
     }
-  )
+
 })
 
 </script>
@@ -39,6 +69,9 @@
 <style>
   section.intro {
     @reference '../styles/global.css';
-    @apply absolute top-0 left-0 overflow-hidden w-full h-screen flex items-center justify-center bg-[#EFEBE4] z-50;
+    @apply fixed top-0 left-0 overflow-hidden w-screen h-screen flex items-center justify-center bg-white z-50;
+    .lottie-intro-container {
+      @apply absolute w-60 h-60;
+    }
   }
 </style>
