@@ -50,10 +50,22 @@ import CodeArea from "./CodeArea.astro"
   import gsap from "gsap"
   import { LifecycleManager } from "../scripts/animationLifecycle.ts"
   import SplitType from "split-type"
+    import { $introComplete } from "../stores/introStore"
 
   const manager = new LifecycleManager()
 
-  manager.onElementLoaded(".site-hero", () => {})
+  const animateHero = () => {
+      manager.onElementLoaded(".site-hero", () => {})
+  }
+
+    $introComplete.listen(() => {
+    if ($introComplete.get()) {
+      animateHero()
+    }
+  })
+  if ($introComplete.get()) {
+    animateHero()
+  }
 </script>
 
 <style>

@@ -5,10 +5,16 @@
 <div class="code-area"></div>
 
 <script>
-import { createHighlighter } from 'shiki'
-  import { CodeToTokenTransformStream } from 'shiki-stream'
+  import { createHighlighter } from "shiki"
+  import { CodeToTokenTransformStream } from "shiki-stream"
+  import { $introComplete } from "../stores/introStore"
 
-  function stringToUint8ArrayStream(str: string, chunkSize = 30, minDelay = 200, maxDelay = 800) {
+  function stringToUint8ArrayStream(
+    str: string,
+    chunkSize = 30,
+    minDelay = 200,
+    maxDelay = 800
+  ) {
     const encoder = new TextEncoder()
     const uint8 = encoder.encode(str)
     let offset = 0
@@ -24,12 +30,12 @@ import { createHighlighter } from 'shiki'
         }
         controller.enqueue(uint8.slice(offset, offset + chunkSize))
         offset += chunkSize
-        await new Promise(r => setTimeout(r, randomDelay()))
-      }
+        await new Promise((r) => setTimeout(r, randomDelay()))
+      },
     })
   }
 
-  document.addEventListener("astro:page-load", async () => {
+  const animateCode = async () => {
     const codeArea = document.querySelector(".code-area")
     if (!codeArea) return
 
@@ -59,31 +65,33 @@ class Thinkerer {
     const textStream = stringToUint8ArrayStream(code)
 
     const highlighter = await createHighlighter({
-      themes: ['aurora-x'],
-      langs: ['typescript']
+      themes: ["aurora-x"],
+      langs: ["typescript"],
     })
 
     const tokenStream = textStream
       .pipeThrough(new TextDecoderStream())
-      .pipeThrough(new CodeToTokenTransformStream({
-        highlighter,
-        lang: 'typescript',
-        theme: 'aurora-x',
-        allowRecalls: false
-      }))
+      .pipeThrough(
+        new CodeToTokenTransformStream({
+          highlighter,
+          lang: "typescript",
+          theme: "aurora-x",
+          allowRecalls: false,
+        })
+      )
 
     const reader = tokenStream.getReader()
-    const tokens: Array<{ content: string, color: string }> = []
+    const tokens: Array<{ content: string; color: string }> = []
     let framePending = false
 
     async function pump() {
       const { value: token, done } = await reader.read()
       if (done) return
 
-      if ('recall' in token) {
+      if ("recall" in token) {
         tokens.length -= token.recall
       } else {
-        tokens.push(token as { content: string, color: string })
+        tokens.push(token as { content: string; color: string })
       }
 
       if (!framePending) {
@@ -96,26 +104,34 @@ class Thinkerer {
 
     function render() {
       framePending = false
-      if(!codeArea) return
+      if (!codeArea) return
       // Properly encode tokens, preserving newlines
       codeArea.innerHTML = tokens
-        .map(t => {
+        .map((t) => {
           const escaped = t.content
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")
           return `<span style="color:${t.color}">${escaped}</span>`
         })
-        .join('')
+        .join("")
     }
 
     pump()
+  }
+
+  $introComplete.listen(() => {
+    if ($introComplete.get()) {
+      animateCode()
+    }
   })
+  if ($introComplete.get()) {
+    animateCode()
+  }
 </script>
 
-
 <style>
-    @reference '../styles/global.css';
+  @reference '../styles/global.css';
   .code-area {
     @apply text-[14px] font-mono pl-2 h-[75%] overflow-hidden;
     white-space: pre-wrap;
