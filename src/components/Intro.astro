@@ -3,68 +3,73 @@
 </section>
 
 <script>
-  import Lottie from "lottie-web";
-  import animation from "../assets/lottie/intro.json";
-  import gsap from "gsap";
-  import { setIntroComplete, $introComplete } from "../stores/introStore";
+  import Lottie from "lottie-web"
+  import animation from "../assets/lottie/intro-new.json"
+  import gsap from "gsap"
+  import { setIntroComplete, $introComplete } from "../stores/introStore"
   import { LifecycleManager } from "../scripts/animationLifecycle.ts"
 
-  const manager = new LifecycleManager();
+  const manager = new LifecycleManager()
 
-  manager.onElementLoaded(".intro", () => {
-    if( $introComplete.get()) {
-      const el = document.querySelector(".intro");
-      if (el) {
-        el.remove();
-      }
-      return;
-    } else {
-    const lottieContainer = document.querySelector(".lottie-intro-container");
-    if (!lottieContainer) return;
+  const initLottie = () => {
+    const lottieContainer = document.querySelector(".lottie-intro-container")
+    if (!lottieContainer) return
     const LottieAnimation = Lottie.loadAnimation({
       container: lottieContainer,
       renderer: "svg",
       loop: false,
       autoplay: true,
       animationData: animation,
-    });
+    })
+    LottieAnimation.setSpeed(0.6)
     manager.ctx?.add(() => {
-      const logoLeft = document.querySelector(".logo-area")?.getBoundingClientRect().left || 0;
-      console.log("logoLeft", logoLeft);
-          gsap.timeline()
-            .set(".intro", { opacity: 1 })
-            .to(lottieContainer, {
-              top:  window.innerWidth < 1024 ? 23 : 16,
-              left: window.innerWidth < 1024 ? logoLeft-3 : 29,
-              delay: 2.5,
-              width: 59,
-              height: 59,
-              duration: 1,
-            }).to(
-            ".intro",
-            {
-              duration: 1,
-              opacity: 0,
-              delay: 0,
-              ease: "power2.inOut",
-              onComplete: () => {
-                // setIntroComplete(true);
-                LottieAnimation.destroy();
-                const el = document.querySelector(".intro");
-                if (el) {
-                  el.remove();
-                }
-              },
+      const logoLeft =
+        document.querySelector(".logo-area")?.getBoundingClientRect().left || 0
+      gsap
+        .timeline()
+        .set(".intro", { opacity: 1 })
+        .to(lottieContainer, {
+          top: window.innerWidth < 1024 ? 23 : 16,
+          left: window.innerWidth < 1024 ? logoLeft - 3 : 29,
+          delay: 3.5,
+          width: 59,
+          height: 59,
+          duration: 1,
+        })
+        .to(".intro", {
+          duration: 1,
+          opacity: 0,
+          delay: 0,
+          ease: "power2.inOut",
+          onComplete: () => {
+            setIntroComplete(true);
+            LottieAnimation.destroy()
+            const el = document.querySelector(".intro")
+            if (el) {
+              el.remove()
             }
-          );
-        }
-      )
+          },
+        })
+    })
+  }
+
+  manager.onElementLoaded(".intro", async () => {
+    if ($introComplete.get()) {
+      const el = document.querySelector(".intro")
+      if (el) {
+        el.remove()
+      }
+      return
+    } else {
+      try {
+        await import("../assets/lottie/intro-new.json")
+        initLottie()
+      } catch (error) {
+        console.error("Error during Lottie animation initialization:", error)
+      }
     }
-
-})
-
+  })
 </script>
-
 
 <style>
   section.intro {

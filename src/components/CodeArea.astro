@@ -1,0 +1,128 @@
+---
+
+---
+
+<div class="code-area"></div>
+
+<script>
+import { createHighlighter } from 'shiki'
+  import { CodeToTokenTransformStream } from 'shiki-stream'
+
+  function stringToUint8ArrayStream(str: string, chunkSize = 30, minDelay = 200, maxDelay = 800) {
+    const encoder = new TextEncoder()
+    const uint8 = encoder.encode(str)
+    let offset = 0
+
+    const randomDelay = () =>
+      Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay
+
+    return new ReadableStream({
+      async pull(controller) {
+        if (offset >= uint8.length) {
+          controller.close()
+          return
+        }
+        controller.enqueue(uint8.slice(offset, offset + chunkSize))
+        offset += chunkSize
+        await new Promise(r => setTimeout(r, randomDelay()))
+      }
+    })
+  }
+
+  document.addEventListener("astro:page-load", async () => {
+    const codeArea = document.querySelector(".code-area")
+    if (!codeArea) return
+
+    const code = `
+class Designer {
+  constructor(private u: string, private x: boolean) {}
+  make() {
+    return { uiResult: this.u.toUpperCase(), uxResult: !!this.x }
+  }
+}
+
+class Developer {
+  constructor(private h: string, private c: string, private j: string) {}
+  make() { 
+    return { htmlResult: this.h, cssResult: this.c, jsResult: this.j }
+  }
+}
+
+class Thinkerer {
+  constructor(private p: string, private c: string) {}
+  make() { 
+    return { passionResult: this.p, curiosityResult: this.c }
+  }
+}
+`.trim()
+
+    const textStream = stringToUint8ArrayStream(code)
+
+    const highlighter = await createHighlighter({
+      themes: ['aurora-x'],
+      langs: ['typescript']
+    })
+
+    const tokenStream = textStream
+      .pipeThrough(new TextDecoderStream())
+      .pipeThrough(new CodeToTokenTransformStream({
+        highlighter,
+        lang: 'typescript',
+        theme: 'aurora-x',
+        allowRecalls: false
+      }))
+
+    const reader = tokenStream.getReader()
+    const tokens: Array<{ content: string, color: string }> = []
+    let framePending = false
+
+    async function pump() {
+      const { value: token, done } = await reader.read()
+      if (done) return
+
+      if ('recall' in token) {
+        tokens.length -= token.recall
+      } else {
+        tokens.push(token as { content: string, color: string })
+      }
+
+      if (!framePending) {
+        framePending = true
+        requestAnimationFrame(render)
+      }
+
+      pump()
+    }
+
+    function render() {
+      framePending = false
+      if(!codeArea) return
+      // Properly encode tokens, preserving newlines
+      codeArea.innerHTML = tokens
+        .map(t => {
+          const escaped = t.content
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+          return `<span style="color:${t.color}">${escaped}</span>`
+        })
+        .join('')
+    }
+
+    pump()
+  })
+</script>
+
+
+<style>
+    @reference '../styles/global.css';
+  .code-area {
+    @apply text-[14px] font-mono pl-2 h-[75%] overflow-hidden;
+    white-space: pre-wrap;
+    word-break: break-all;
+    line-height: 1.5;
+    * {
+      @apply tracking-[0.4px];
+    }
+  }
+</style>

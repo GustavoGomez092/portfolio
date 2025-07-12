@@ -1,42 +1,117 @@
 ---
-import '@fontsource/meddon';
-
+import "@fontsource/meddon"
+import profilePic from "../assets/img/profile-pic-optimized.png"
+import Image from "astro/components/Image.astro"
+import github from "../assets/img/github.svg"
+import linkedin from "../assets/img/linkedin.svg"
+import CodeArea from "./CodeArea.astro"
 ---
-
 
 <section class="site-hero">
   <div class="main-section">
-
+    <div class="bento grid grid-cols-4 grid-rows-5 gap-4">
+      <div class="bento-item bento-1">
+        <CodeArea />
+        <h1>
+          A Full-Stack Developer with a Keen Eye for Design and a Passion for Tinkering
+        </h1>
+        <div class="overlay"></div>
+      </div>
+      <div class="bento-item bento-2">2</div>
+      <div class="bento-item bento-3">3</div>
+      <div class="bento-item bento-4">4</div>
+      <div class="bento-item bento-5">
+        <div class="image-section">
+          <Image
+            src={profilePic}
+            alt="Profile picture of Gustavo Gomez"
+            width={200}
+            height={200}
+          />
+        </div>
+        <div class="my-card">
+          <h2>Gustavo Gomez</h2>
+          <p>Software developer & JavaScript enthusiast</p>
+        </div>
+        <div class="social-networks">
+          <a href="https://github.com/gustavogomez092" target="_blank" rel="noopener noreferrer">
+            <Image width={36} height={36} src={github} alt="GitHub" />
+          </a>
+          <a href="https://www.linkedin.com/in/gustavo-gomez-selva-7000621b7" target="_blank" rel="noopener noreferrer">
+            <Image width={36} height={36} src={linkedin} alt="LinkedIn" />
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <script>
-  import gsap from 'gsap';
+  import gsap from "gsap"
   import { LifecycleManager } from "../scripts/animationLifecycle.ts"
-  import SplitType from 'split-type';
+  import SplitType from "split-type"
 
-    const manager = new LifecycleManager();
+  const manager = new LifecycleManager()
 
-      manager.onElementLoaded(".site-hero", () => {
-
-      })
-
-
+  manager.onElementLoaded(".site-hero", () => {})
 </script>
 
 <style>
   @reference '../styles/global.css';
 
   .site-hero {
-    @apply w-full h-[calc(100vh_-_200px)] flex items-center justify-center;
+    @apply w-screen h-[calc(100vh_-_200px)] flex items-center justify-center;
     .main-section {
-      @apply text-center;
-      h1 {
-        @apply text-[100px] font-medium leading-tight text-black;
-        span {
-          @apply inline-block;
-          &.line {
-            @apply overflow-hidden;
+      @apply w-full h-full px-10;
+      .bento {
+        @apply w-full h-full;
+
+        .bento-item {
+          @apply rounded-lg p-6;
+        }
+        .bento-1 {
+          @apply relative bg-slate-900 col-span-2 row-span-4 flex flex-col justify-between overflow-hidden;
+          h1 {
+            @apply relative z-40 text-5xl font-bold text-white;
+          }
+          .overlay {
+            @apply absolute w-full bg-gradient-to-t from-slate-900 via-slate-900 via-60% to-transparent
+            z-30 left-0 bottom-0 h-[50%];
+          }
+        }
+        .bento-2 {
+          @apply bg-emerald-200 row-span-3 col-start-3;
+        }
+        .bento-3 {
+          @apply bg-rose-200 row-span-2 col-start-3 row-start-4;
+        }
+        .bento-4 {
+          @apply bg-sky-200 row-span-5 col-start-4 row-start-1;
+        }
+        .bento-5 {
+          @apply bg-slate-200 col-span-2 row-start-5 flex items-center space-x-6;
+          .image-section {
+            @apply h-24 w-24;
+            img {
+              @apply rounded-full w-full h-full object-cover object-top;
+            }
+          }
+          .my-card {
+            @apply flex flex-col justify-center;
+            h2 {
+              @apply text-2xl font-bold text-gray-800;
+            }
+            p {
+              @apply text-gray-600;
+            }
+          }
+          .social-networks {
+            @apply flex space-x-4 ml-10;
+            a {
+              img {
+                @apply w-9 h-9;
+              }
+            }
           }
         }
       }

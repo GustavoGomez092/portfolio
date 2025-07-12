@@ -34,8 +34,47 @@ import menu from "../collections/menu.json"
   import { LifecycleManager } from "../scripts/animationLifecycle.ts"
   import { $smoothScroll } from "../stores/smoothScrollStore"
   import { $introComplete } from "../stores/introStore"
+  import g1 from "../assets/img/g/1.png"
+  import g2 from "../assets/img/g/2.png"
+  import g3 from "../assets/img/g/3.png"
+  import g4 from "../assets/img/g/4.png"
+  import g5 from "../assets/img/g/5.png"
+  import g6 from "../assets/img/g/6.png"
+  import g7 from "../assets/img/g/7.png"
+  import g8 from "../assets/img/g/8.png"
+  import g9 from "../assets/img/g/9.png"
+  import g10 from "../assets/img/g/10.png"
+  import g11 from "../assets/img/g/11.png"
+  import g12 from "../assets/img/g/12.png"
+  import g13 from "../assets/img/g/13.png"
+  import g14 from "../assets/img/g/14.png"
+  import g15 from "../assets/img/g/15.png"
+  import g16 from "../assets/img/g/16.png"
+  import g17 from "../assets/img/g/17.png"
+  import g18 from "../assets/img/g/18.png"
+  import g19 from "../assets/img/g/19.png"
 
   const manager = new LifecycleManager()
+
+  // change image on logo hover every 0.5s on hover
+  const logoDresser = () => {
+    const logo: HTMLImageElement | null = document.querySelector("nav .logo-area > a > img")
+    if (!logo) return
+    const images = [
+      g1, g2, g3, g4, g5, g6, g7, g8, g9, g10,
+      g11, g12, g13, g14, g15, g16, g17, g18,
+      g19
+    ]
+    let index = 0
+
+    logo.addEventListener("mouseover", () => {
+      if (logo) {
+        index = Math.floor(Math.random() * images.length)
+        logo.src = images[index].src
+      }
+    })
+
+  }
 
   const animateHeader = (header:HTMLElement) => {
     manager.ctx?.add(() => {
@@ -54,6 +93,7 @@ import menu from "../collections/menu.json"
   }
 
   manager.onElementLoaded("nav", () => {
+    logoDresser()
     const header = document.querySelector("nav")
     if (!header) return
     // gsap.set(header, { opacity: 0 })
@@ -81,9 +121,9 @@ import menu from "../collections/menu.json"
     .logo-area {
       @apply flex items-center;
       .logo {
-        @apply flex items-center gap-2 text-2xl font-bold text-gray-800;
+        @apply flex items-center gap-2 text-2xl font-bold text-gray-800 w-14 h-14;
         img {
-          @apply w-14 h-14;
+          @apply w-full h-full object-contain;
         }
       }
     }
