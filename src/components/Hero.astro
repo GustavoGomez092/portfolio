@@ -20,11 +20,12 @@ import video from "../assets/video/waves.mp4"
         <div class="overlay"></div>
       </div>
       <div class="bento-item bento-2">2</div>
-      <div class="bento-item bento-3">3</div>
-      <div class="bento-item bento-4">
-        <video width="600" height="100%" autoplay loop muted playsinline>
+      <div class="bento-item bento-3">
+                <video class="bg-video" width="600" height="100%" autoplay loop muted playsinline>
           <source src={video} />
         </video>
+      </div>
+      <div class="bento-item bento-4">4
       </div>
       <div class="bento-item bento-5">
         <div class="image-section">
@@ -111,7 +112,10 @@ import video from "../assets/video/waves.mp4"
           @apply bg-emerald-200 row-span-3 col-start-3;
         }
         .bento-3 {
-          @apply bg-rose-200 row-span-2 col-start-3 row-start-4;
+          @apply bg-rose-200 row-span-2 col-start-3 row-start-4 relative overflow-hidden;
+          .bg-video {
+            @apply absolute left-0 top-0 w-full h-full object-cover;
+          }
         }
         .bento-4 {
           @apply bg-sky-200 row-span-5 col-start-4 row-start-1;
