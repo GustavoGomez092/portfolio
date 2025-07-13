@@ -38,6 +38,7 @@
   const $smallPlus = document.querySelector('.cursor__plus');
   const $smallPlusArea = document.querySelector('.cursor__plus--area')
   const $hoverables = document.querySelectorAll('.hoverable');
+  const $invertArea = document.querySelectorAll('.invert-area');
   const hoverablesArea = document.querySelectorAll('.hoverableArea');
 
   // Listeners
@@ -51,6 +52,11 @@
   for (let i = 0; i < hoverablesArea.length; i++) {
     hoverablesArea[i].addEventListener('mouseenter', onMouseHoverArea);
     hoverablesArea[i].addEventListener('mouseleave', onMouseHoverAreaOut);
+  }
+
+  for (let i = 0; i < $invertArea.length; i++) {
+    $invertArea[i].addEventListener('mouseenter', onMouseInvertArea);
+    $invertArea[i].addEventListener('mouseleave', onMouseInvertAreaOut);
   }
 
   // Move the cursor
@@ -82,6 +88,34 @@
       attr: {
         r: 18
       }
+    })
+  }
+
+  // Invert area
+  function onMouseInvertArea() {
+    gsap.to($bigCircle, .3, {
+      stroke: '#DEDEDE',
+      fill: 'transparent',
+      mixBlendMode: 'difference'
+    })
+    gsap.to($smallCircle, .3, {
+      fill: '#DEDEDE'
+    })
+    gsap.to($smallPlusArea, 0.3, {
+      stroke: 'transparent'
+    })
+  }
+  function onMouseInvertAreaOut() {
+    gsap.to($bigCircle, 0.3, {
+      fill: 'transparent',
+      stroke: '#212121',
+      mixBlendMode: 'normal'
+    })
+    gsap.to($smallCircle, 0.3, {
+      fill: '#212121'
+    })
+    gsap.to($smallPlusArea, 0.3, {
+      stroke: 'transparent'
     })
   }
 
@@ -118,6 +152,8 @@
 <style>
 body .cursor {
   pointer-events: none;
+  z-index: 1000;
+  position: fixed;
 }
 body .cursor__circle {
   position: fixed;
@@ -128,13 +164,13 @@ body .cursor__circle {
   transform: translateX(-50%) translateY(-50%);
 }
 body .cursor__circle--big {
-  stroke: #dedede;
+  stroke: var(--color-slate-950);
   fill: transparent;
   mix-blend-mode: difference;
   transform: translateX(-50%) translateY(-50%);
 }
 body .cursor__circle--small {
-  fill: #dedede;
+  fill: var(--color-slate-950);
   width: 8px;
   height: 8px;
   mix-blend-mode: difference;

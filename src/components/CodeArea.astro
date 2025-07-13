@@ -9,28 +9,16 @@
   import { CodeToTokenTransformStream } from "shiki-stream"
   import { $introComplete } from "../stores/introStore"
 
-  function stringToUint8ArrayStream(
-    str: string,
-    chunkSize = 30,
-    minDelay = 200,
-    maxDelay = 800
-  ) {
-    const encoder = new TextEncoder()
-    const uint8 = encoder.encode(str)
-    let offset = 0
-
-    const randomDelay = () =>
-      Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay
-
-    return new ReadableStream({
-      async pull(controller) {
-        if (offset >= uint8.length) {
+  function stringToStringStream(s: string) {
+    let done = false
+    return new ReadableStream<string>({
+      pull(controller) {
+        if (!done) {
+          controller.enqueue(s)
+          done = true
+        } else {
           controller.close()
-          return
         }
-        controller.enqueue(uint8.slice(offset, offset + chunkSize))
-        offset += chunkSize
-        await new Promise((r) => setTimeout(r, randomDelay()))
       },
     })
   }
@@ -62,23 +50,19 @@ class Thinkerer {
 }
 `.trim()
 
-    const textStream = stringToUint8ArrayStream(code)
-
     const highlighter = await createHighlighter({
       themes: ["aurora-x"],
       langs: ["typescript"],
     })
 
-    const tokenStream = textStream
-      .pipeThrough(new TextDecoderStream())
-      .pipeThrough(
-        new CodeToTokenTransformStream({
-          highlighter,
-          lang: "typescript",
-          theme: "aurora-x",
-          allowRecalls: false,
-        })
-      )
+    const tokenStream = stringToStringStream(code).pipeThrough(
+      new CodeToTokenTransformStream({
+        highlighter,
+        lang: "typescript",
+        theme: "aurora-x",
+        allowRecalls: false,
+      })
+    )
 
     const reader = tokenStream.getReader()
     const tokens: Array<{ content: string; color: string }> = []
@@ -98,7 +82,8 @@ class Thinkerer {
         framePending = true
         requestAnimationFrame(render)
       }
-
+      // Delay between tokens for streaming effect
+      await new Promise((r) => setTimeout(r, Math.random() * 30 + 10))
       pump()
     }
 

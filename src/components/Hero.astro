@@ -5,21 +5,27 @@ import Image from "astro/components/Image.astro"
 import github from "../assets/img/github.svg"
 import linkedin from "../assets/img/linkedin.svg"
 import CodeArea from "./CodeArea.astro"
+import video from "../assets/video/waves.mp4"
 ---
 
 <section class="site-hero">
   <div class="main-section">
     <div class="bento grid grid-cols-4 grid-rows-5 gap-4">
-      <div class="bento-item bento-1">
+      <div class="bento-item bento-1 invert-area">
         <CodeArea />
         <h1>
-          A Full-Stack Developer with a Keen Eye for Design and a Passion for Tinkering
+          A Full-Stack Developer with a Keen Eye for Design and a Passion for
+          Tinkering
         </h1>
         <div class="overlay"></div>
       </div>
       <div class="bento-item bento-2">2</div>
       <div class="bento-item bento-3">3</div>
-      <div class="bento-item bento-4">4</div>
+      <div class="bento-item bento-4">
+        <video width="600" height="100%" autoplay loop muted playsinline>
+          <source src={video} />
+        </video>
+      </div>
       <div class="bento-item bento-5">
         <div class="image-section">
           <Image
@@ -34,10 +40,20 @@ import CodeArea from "./CodeArea.astro"
           <p>Software developer & JavaScript enthusiast</p>
         </div>
         <div class="social-networks">
-          <a href="https://github.com/gustavogomez092" target="_blank" rel="noopener noreferrer">
+          <a
+            class="hoverable"
+            href="https://github.com/gustavogomez092"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Image width={36} height={36} src={github} alt="GitHub" />
           </a>
-          <a href="https://www.linkedin.com/in/gustavo-gomez-selva-7000621b7" target="_blank" rel="noopener noreferrer">
+          <a
+            class="hoverable"
+            href="https://www.linkedin.com/in/gustavo-gomez-selva-7000621b7"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Image width={36} height={36} src={linkedin} alt="LinkedIn" />
           </a>
         </div>
@@ -50,15 +66,15 @@ import CodeArea from "./CodeArea.astro"
   import gsap from "gsap"
   import { LifecycleManager } from "../scripts/animationLifecycle.ts"
   import SplitType from "split-type"
-    import { $introComplete } from "../stores/introStore"
+  import { $introComplete } from "../stores/introStore"
 
   const manager = new LifecycleManager()
 
   const animateHero = () => {
-      manager.onElementLoaded(".site-hero", () => {})
+    manager.onElementLoaded(".site-hero", () => {})
   }
 
-    $introComplete.listen(() => {
+  $introComplete.listen(() => {
     if ($introComplete.get()) {
       animateHero()
     }
@@ -72,7 +88,7 @@ import CodeArea from "./CodeArea.astro"
   @reference '../styles/global.css';
 
   .site-hero {
-    @apply w-screen h-[calc(100vh_-_200px)] flex items-center justify-center;
+    @apply w-screen max-w-site mx-auto pt-8 h-[calc(100vh_-_150px)] flex items-center justify-center;
     .main-section {
       @apply w-full h-full px-10;
       .bento {
