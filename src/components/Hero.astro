@@ -10,7 +10,7 @@ import video from "../assets/video/waves.mp4"
 
 <section class="site-hero">
   <div class="main-section">
-    <div class="bento grid grid-cols-4 grid-rows-5 gap-4">
+    <div class="bento">
       <div class="bento-item bento-1 invert-area">
         <CodeArea />
         <h1>
@@ -20,13 +20,20 @@ import video from "../assets/video/waves.mp4"
         <div class="overlay"></div>
       </div>
       <div class="bento-item bento-2">2</div>
-      <div class="bento-item bento-3  invert-area">
-                <video class="bg-video" width="600" height="100%" autoplay loop muted playsinline>
+      <div class="bento-item bento-3 invert-area">
+        <video
+          class="bg-video"
+          width="600"
+          height="100%"
+          autoplay
+          loop
+          muted
+          playsinline
+        >
           <source src={video} />
         </video>
       </div>
-      <div class="bento-item bento-4">4
-      </div>
+      <div class="bento-item bento-4">4</div>
       <div class="bento-item bento-5">
         <div class="image-section">
           <Image
@@ -61,47 +68,215 @@ import video from "../assets/video/waves.mp4"
       </div>
     </div>
   </div>
+  <div id="animation-target" class="w-full max-w-screen h-0 lg:h-[100vh]"></div>
 </section>
 
 <script>
   import gsap from "gsap"
   import { LifecycleManager } from "../scripts/animationLifecycle.ts"
-  import SplitType from "split-type"
   import { $introComplete } from "../stores/introStore"
+  import { ScrollTrigger } from "gsap/all"
+
+  gsap.registerPlugin(ScrollTrigger)
 
   const manager = new LifecycleManager()
 
-  const animateHero = () => {
-    manager.onElementLoaded(".site-hero", () => {})
+  const bentoAnimation = () => {
+    const bentoItems = document.querySelectorAll(".bento-item")
+    manager.ctx?.add(() =>
+      gsap.timeline().from(bentoItems, {
+        duration: 1,
+        opacity: 0,
+        delay: 0.4,
+        y: 50,
+        stagger: 0.2,
+        ease: "power3.out",
+      })
+    )
   }
 
-  $introComplete.listen(() => {
+  const scrollAnimation = () => {
+    const bento1 = document.querySelector(".bento-1")
+    const bento2 = document.querySelector(".bento-2")
+    const bento3 = document.querySelector(".bento-3")
+    const bento4 = document.querySelector(".bento-4")
+    const bento5 = document.querySelector(".bento-5")
+    const allBentos = [bento3, bento1, bento5, bento2, bento4]
+
+    if (!bento1 || !bento2 || !bento3 || !bento4 || !bento5) return
+
+    manager.ctx?.add(() => {
+      let mm = gsap.matchMedia()
+
+      // add a media query. When it matches, the associated function will run
+      mm.add("(min-width: 1024px)", () => {
+        // this setup code only runs when viewport is at least 800px wide
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: ".main-section",
+              endTrigger: "#animation-target",
+              start: "center center",
+              end: "bottom center",
+              markers: false,
+              scrub: true,
+              pin: true,
+              pinSpacing: false,
+            },
+            defaults: {
+              ease: "linear",
+            },
+          })
+          .fromTo(
+            allBentos,
+            {
+              x: 0,
+              y: 0,
+              scale: 1,
+            },
+            {
+              x: function (_, target) {
+                return (
+                  window.innerWidth / 2 -
+                  target.getBoundingClientRect().left -
+                  Number(gsap.getProperty(target, "width")) / 2
+                )
+              },
+              y: function (_, target) {
+                return (
+                  window.innerHeight / 2 -
+                  target.getBoundingClientRect().top -
+                  Number(gsap.getProperty(target, "height")) / 2
+                )
+              },
+              scale: function (_, target) {
+                if (!target.classList.contains("bento-3")) {
+                  return 0
+                } else {
+                  return 1
+                }
+              },
+              duration: 10,
+              stagger: 1.5,
+            }
+          )
+          .fromTo(
+            bento3,
+            {
+              scale: 1,
+            },
+            {
+              duration: 20,
+              scale: 10,
+            },
+            "-=9"
+          )
+          .to(
+            ".bento-3 > .bg-video",
+            {
+              duration: 5,
+              opacity: 0,
+            },
+            "-=22"
+          )
+
+        return () => {
+          // optional
+          // custom cleanup code here (runs when it STOPS matching)
+        }
+      })
+
+      mm.add("(max-width: 1023px)", () => {
+        // this setup code only runs when viewport is less than 800px wide
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: ".main-section",
+              endTrigger: "#animation-target",
+              start: "center center",
+              end: "bottom center",
+              markers: false,
+              scrub: true,
+              pin: true,
+              pinSpacing: false,
+            },
+            defaults: {
+              ease: "linear",
+            },
+          })
+          .fromTo(
+            bento3,
+            {
+              x: 0,
+              y: 0,
+            },
+            {
+              y: "-100%",
+              duration: 10,
+              stagger: 1.5,
+            }
+          )
+          .fromTo(
+            bento3,
+            {
+              scale: 1,
+            },
+            {
+              duration: 20,
+              scale: 5,
+            },
+            "-=9"
+          )
+          .to(
+            ".bento-3 > .bg-video",
+            {
+              duration: 5,
+              opacity: 0,
+            },
+            "-=22"
+          )
+
+        return () => {
+          // optional
+          // custom cleanup code here (runs when it STOPS matching)
+        }
+      })
+
+    })
+  }
+
+  manager.onElementLoaded(".site-hero", () => {
+    scrollAnimation()
     if ($introComplete.get()) {
-      animateHero()
+      bentoAnimation()
+    } else {
+      $introComplete.subscribe((value) => {
+        if (value) {
+          bentoAnimation()
+        }
+      })
     }
   })
-  if ($introComplete.get()) {
-    animateHero()
-  }
 </script>
 
 <style>
   @reference '../styles/global.css';
 
   .site-hero {
-    @apply w-screen max-w-site mx-auto pt-8 h-[calc(100vh_-_150px)] flex items-center justify-center;
+    @apply pt-28 lg:pt-8 h-auto flex flex-col items-center justify-center z-10 overflow-hidden;
     .main-section {
-      @apply w-full h-full px-10;
+      @apply w-screen max-w-site mx-auto h-full px-4 lg:px-10;
       .bento {
-        @apply w-full h-full;
+        @apply w-full h-auto lg:h-[calc(100vh_-_200px)] grid grid-cols-4 grid-rows-5 gap-4;
 
         .bento-item {
-          @apply rounded-lg p-6;
+          @apply rounded-lg p-6 origin-center;
         }
         .bento-1 {
-          @apply relative bg-slate-900 col-span-2 row-span-4 flex flex-col justify-between overflow-hidden;
+          @apply relative bg-slate-900 flex flex-col justify-between overflow-hidden z-10 h-[72vh] lg:h-full;
+          @apply col-span-4 lg:col-span-2 row-span-2 lg:row-span-4 col-start-1 row-start-1;
           h1 {
-            @apply relative z-40 text-5xl font-bold text-white;
+            @apply relative z-40 text-[28px] leading-tight lg:text-5xl font-bold text-white;
           }
           .overlay {
             @apply absolute w-full bg-gradient-to-t from-slate-900 via-slate-900 via-60% to-transparent
@@ -109,19 +284,22 @@ import video from "../assets/video/waves.mp4"
           }
         }
         .bento-2 {
-          @apply bg-emerald-200 row-span-3 col-start-3;
+          @apply hidden lg:block bg-emerald-200 z-50;
+          @apply row-span-3 col-start-3;
         }
         .bento-3 {
-          @apply bg-rose-200 row-span-2 col-start-3 row-start-4 relative overflow-hidden;
+          @apply bg-black relative overflow-hidden z-60;
+          @apply row-span-1 col-span-4 lg:col-span-1 lg:row-span-2 col-start-1 lg:col-start-3 row-start-4;
           .bg-video {
             @apply absolute left-0 top-0 w-full h-full object-cover;
           }
         }
         .bento-4 {
-          @apply bg-sky-200 row-span-5 col-start-4 row-start-1;
+          @apply hidden lg:block bg-sky-200 row-span-5 col-start-4 row-start-1 z-40;
         }
         .bento-5 {
-          @apply bg-slate-200 col-span-2 row-start-5 flex items-center space-x-6;
+          @apply bg-slate-200 flex flex-col lg:flex-row justify-center items-center space-y-4 space-x-0 lg:space-x-6 z-30;
+          @apply col-span-4 lg:col-span-2 col-start-1 row-start-3 lg:row-start-5;
           .image-section {
             @apply h-24 w-24;
             img {
@@ -129,7 +307,7 @@ import video from "../assets/video/waves.mp4"
             }
           }
           .my-card {
-            @apply flex flex-col justify-center;
+            @apply flex flex-col justify-center text-center lg:text-left;
             h2 {
               @apply text-2xl font-bold text-gray-800;
             }
@@ -138,7 +316,7 @@ import video from "../assets/video/waves.mp4"
             }
           }
           .social-networks {
-            @apply flex space-x-4 ml-10;
+            @apply flex space-x-4 ml-0 lg:ml-10;
             a {
               img {
                 @apply w-9 h-9;

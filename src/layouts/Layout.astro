@@ -1,35 +1,47 @@
 ---
-import "../styles/global.css";
+import "../styles/global.css"
 
-import Logo from "../assets/img/logo.svg?url";
+import Logo from "../assets/img/logo.svg?url"
 
-import { ClientRouter } from "astro:transitions";
-import Footer from "../components/Footer.astro";
-import Header from "../components/Header.astro";
-import Intro from "../components/Intro.astro";
-import Mouse from "../components/Mouse.astro";
+import { ClientRouter } from "astro:transitions"
+import Footer from "../components/Footer.astro"
+import Header from "../components/Header.astro"
+import Intro from "../components/Intro.astro"
+import Mouse from "../components/Mouse.astro"
 ---
+
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<ClientRouter />
-		<link rel="icon" type="image/svg+xml" href={Logo} />
-		<meta name="generator" content={Astro.generator} />
-		<title>Gustavo Gomez - Full Stack Developer</title>
-	</head>
-	<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <ClientRouter />
+    <link rel="icon" type="image/svg+xml" href={Logo} />
+    <meta name="generator" content={Astro.generator} />
+    <title>Gustavo Gomez - Full Stack Developer</title>
+  </head>
+  <body>
 		<Mouse />
-		<Intro />
-		<Header />
-		<slot />
-		<Footer />
-	</body>
+    <div id="smooth-wrapper" class="site-wrapper">
+      <div id="smooth-content" class="site-container">
+        <Intro />
+        <Header />
+        <slot />
+      </div>
+    </div>
+      <Footer />
+    </div>
+  </body>
 </html>
 
+<script>
+import { initSmoothScrolling } from "../scripts/smoothScroll.ts"
+
+initSmoothScrolling()
+</script>
+
 <style>
-	body {
-		@apply bg-[#f3f4f6];
-	}
+  body {
+    @apply bg-[#f3f4f6];
+  }
 </style>

@@ -1,0 +1,201 @@
+---
+
+---
+
+<div class="about-section invert-area">
+  <div class="inner-container">
+    <h2 class="title-about">About Me</h2>
+    <div class="part-one">
+      <p class="split-one">
+        I’m a full-stack developer with 10<span class="plus hoverable">+</span> years of experience building web,
+        mobile, and desktop apps. I've worked with different languages and
+        frameworks, but I specialize in <span class="js hoverable">JS</span> & <span class="ts hoverable">TS</span>.
+      </p>
+    </div>
+    <div class="part-two">
+      <p class="split-two">
+        With a design background, I love crafting clean user interfaces and
+        smooth animations. You can say I’m passionate about creating experiences
+        that delight users.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  import gsap from "gsap"
+  import { LifecycleManager } from "../scripts/animationLifecycle.ts"
+  import { SplitText } from "gsap/SplitText"
+  import JSImg from "../assets/img/JavaScript_logo.svg?url"
+  import TSImg from "../assets/img/TypeScript_logo.svg?url"
+  import PlusImg from "../assets/img/plus-1.webp?url"
+
+  gsap.registerPlugin(SplitText)
+
+  const manager = new LifecycleManager()
+
+  manager.onElementLoaded(".about-section", () => {
+    const splitTitle = new SplitText(".about-section .title-about", {
+      type: "lines, words",
+      linesClass: "split-title",
+    })
+
+    const splitText = new SplitText(".about-section .split-one", {
+      type: "lines, words",
+    })
+
+    const splitText2 = new SplitText(".about-section .split-two", {
+      type: "lines, words",
+    })
+
+    const plusImage = document.createElement("img")
+    plusImage.className =
+      "plus w-8 h-8 lg:w-24 lg:h-24 inline-block rounded-md -ml-0 lg:-ml-2 -top-1 lg:-top-4 relative rotate-45"
+    plusImage.src = PlusImg
+    plusImage.alt = "Plus Icon"
+    const replaceWithPlus = splitText.words.find(word => {
+      return word.parentElement?.classList.contains("plus")
+    })
+    replaceWithPlus?.replaceChildren(plusImage)
+
+    const jsImage = document.createElement("img")
+    jsImage.className =
+      "js w-8 h-8 lg:w-24 lg:h-24 inline-block rounded-md ml-2 lg:ml-7 -top-1 lg:-top-4 relative"
+    jsImage.src = JSImg
+    jsImage.alt = "JavaScript Logo"
+    const replaceWithJs = splitText.words.find(word => {
+      return word.parentElement?.classList.contains("js")
+    })
+    replaceWithJs?.replaceChildren(jsImage)
+
+    const tsImage = document.createElement("img")
+    tsImage.className =
+      "ts w-8 h-8 lg:w-24 lg:h-24 inline-block rounded-md ml-2 lg:ml-8 -top-1 lg:-top-4 relative"
+    tsImage.src = TSImg
+    tsImage.alt = "TypeScript Logo"
+    const replaceWithTs = splitText.words.find(word => {
+      return word.parentElement?.classList.contains("ts")
+    })
+    replaceWithTs?.replaceChildren(tsImage)
+
+    // Plus Image Animation
+    document.querySelector(".about-section .plus")?.addEventListener("mouseover", () => {
+      gsap.to(plusImage, {
+        scale: 1.08,
+        rotation: 135,
+        duration: 1,
+        ease: "elastic.out",
+      })
+    })
+
+    document.querySelector(".about-section .plus")?.addEventListener("mouseout", () => {
+      gsap.to(plusImage, {
+        scale: 1,
+        rotation: 45,
+        duration: 1,
+        ease: "elastic.out",
+      })
+    })
+
+    // JS Image Animation
+    document.querySelector(".about-section .js")?.addEventListener("mouseover", () => {
+      gsap.to(jsImage, {
+        scale: 1.3,
+        duration: 1,
+        rotate: 20,
+        ease: "elastic.out",
+      })
+    })
+    document.querySelector(".about-section .js")?.addEventListener("mouseout", () => {
+      gsap.to(jsImage, {
+        scale: 1,
+        duration: 1,
+        rotate: 0,
+        ease: "elastic.out",
+      })
+    })
+
+    // TS Image Animation
+    document.querySelector(".about-section .ts")?.addEventListener("mouseover", () => {
+      gsap.to(tsImage, {
+        scale: 1.3,
+        duration: 1,
+        rotate: -20,
+        ease: "elastic.out",
+      })
+    })
+    document.querySelector(".about-section .ts")?.addEventListener("mouseout", () => {
+      gsap.to(tsImage, {
+        scale: 1,
+        duration: 1,
+        rotate: 0,
+        ease: "elastic.out",
+      })
+    })
+
+    manager.ctx?.add(() => {
+      gsap.timeline().from(splitTitle.words, {
+        y: "100%",
+        opacity: 0,
+        duration: 0.5,
+        ease: "power1.out",
+        scrollTrigger: {
+          scrub: true,
+          trigger: ".about-section .title-about",
+          start: "top center+=10%",
+          end: "bottom center+=10%",
+        },
+      })
+
+      gsap.timeline().from(splitText.words, {
+        y: "100%",
+        opacity: 0,
+        duration: 0.5,
+        ease: "power1.out",
+        stagger: 0.1,
+        scrollTrigger: {
+          scrub: true,
+          trigger: ".about-section .split-one",
+          start: "top center+=10%",
+          end: "bottom center+=10%",
+        },
+      })
+
+      gsap.timeline().from(splitText2.words, {
+        y: "100%",
+        opacity: 0,
+        duration: 0.5,
+        ease: "power1.out",
+        stagger: 0.1,
+        scrollTrigger: {
+          scrub: true,
+          trigger: ".about-section .split-two",
+          start: "top center+=10%",
+          end: "bottom center+=10%",
+        },
+      })
+
+    })
+  })
+</script>
+
+<style>
+  @reference '../styles/global.css';
+
+  .about-section {
+    @apply w-full mx-auto px-4 xl:px-0 py-12 lg:py-40 bg-black relative z-70 overflow-hidden;
+    box-shadow: 0 0 0 1px black;
+    .inner-container {
+      @apply w-full max-w-site mx-auto flex flex-col;
+      .title-about {
+        @apply text-[64px] lg:text-[128px] font-bold mb-4 text-white;
+        .split-title {
+          @apply overflow-hidden;
+        }
+      }
+      p {
+        @apply text-white text-[38px] lg:text-[110px] leading-[1.2] mb-12 lg:mb-36;
+      }
+    }
+  }
+</style>

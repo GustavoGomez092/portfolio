@@ -25,7 +25,6 @@ import menu from "../collections/menu.json"
   </div>
   <div class="call-to-action">
     <a href="" class="btn hoverable">Download Resume</a>
-    <a href="#contact" class="btn hoverable">Contact Me</a>
   </div>
 </nav>
 
@@ -86,7 +85,7 @@ import menu from "../collections/menu.json"
           delay: 0,
           ease: "power2.inOut",
           onComplete: () => {
-            $smoothScroll.value.start()
+            $smoothScroll.value.paused(false)
           },
         })
     })
@@ -97,7 +96,7 @@ import menu from "../collections/menu.json"
     const header = document.querySelector("nav")
     if (!header) return
     // gsap.set(header, { opacity: 0 })
-    $smoothScroll.value.stop()
+    $smoothScroll.value.paused(true)
     $introComplete.listen(() => {
     if ($introComplete.get()) {
         animateHeader(header)
