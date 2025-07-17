@@ -6,6 +6,7 @@ import github from "../assets/img/github.svg"
 import linkedin from "../assets/img/linkedin.svg"
 import CodeArea from "./CodeArea.astro"
 import video from "../assets/video/waves.mp4"
+import MarqueeWall from "./MarqueeWall.astro"
 ---
 
 <section class="site-hero">
@@ -19,7 +20,9 @@ import video from "../assets/video/waves.mp4"
         </h1>
         <div class="overlay"></div>
       </div>
-      <div class="bento-item bento-2">2</div>
+      <div class="bento-item bento-2">
+        <MarqueeWall />
+      </div>
       <div class="bento-item bento-3 invert-area">
         <video
           class="bg-video"
@@ -284,7 +287,7 @@ import video from "../assets/video/waves.mp4"
           }
         }
         .bento-2 {
-          @apply hidden lg:block bg-emerald-200 z-50;
+          @apply hidden lg:block bg-gray-200 z-50 p-0 overflow-hidden;
           @apply row-span-3 col-start-3;
         }
         .bento-3 {

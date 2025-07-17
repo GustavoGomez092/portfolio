@@ -1,0 +1,193 @@
+---
+import Image from "astro/components/Image.astro"
+import JSLogo from "../assets/img/JavaScript_logo.svg"
+---
+
+<section class="marquee-wall">
+  <div class="marquee-container">
+    <!-- Marquee Row 1 -->
+    <div class="home-logo-wrapper">
+      <div class="clients-grid animate-slide">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+    </div>
+    <!-- Marquee Row 2 -->
+    <div class="home-logo-wrapper reverse">
+      <div class="clients-grid animate-slide-alt">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide-alt">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide-alt">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide-alt">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide-alt">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide-alt">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+    </div>
+  </div>
+  <div class="marquee-container">
+    <!-- Marquee Row 1 -->
+    <div class="home-logo-wrapper">
+      <div class="clients-grid animate-slide">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+    </div>
+    <!-- Marquee Row 2 -->
+    <div class="home-logo-wrapper reverse">
+      <div class="clients-grid animate-slide-alt">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide-alt">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide-alt">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide-alt">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide-alt">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide-alt">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+    </div>
+  </div>
+  <div class="marquee-container">
+    <!-- Marquee Row 1 -->
+    <div class="home-logo-wrapper">
+      <div class="clients-grid animate-slide">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+    </div>
+    <!-- Marquee Row 2 -->
+    <div class="home-logo-wrapper reverse">
+      <div class="clients-grid animate-slide-alt">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide-alt">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide-alt">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide-alt">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide-alt">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+      <div class="clients-grid animate-slide-alt">
+        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @reference '../styles/global.css';
+  section.marquee-wall {
+    .marquee-container {
+      @apply relative overflow-hidden mt-4;
+
+      &:not(:first-child) {
+        @apply mt-4;
+      }
+      .home-logo-wrapper {
+        @apply relative flex gap-x-2 items-center justify-center w-[200%];
+
+        &.reverse {
+          @apply mt-4;
+        }
+
+        .clients-grid {
+          @apply flex gap-12 w-24 h-24 p-2 bg-white rounded-lg;
+
+          .client-logo {
+            @apply h-full w-full object-contain object-center;
+          }
+
+          &.animate-slide {
+            animation: slide 2s linear infinite;
+          }
+
+          &.animate-slide-alt {
+            animation: slidealt 2s linear infinite reverse;
+          }
+        }
+      }
+    }
+  }
+
+  @keyframes slide {
+    0% {
+      transform: translateX(calc(0% + 0px));
+    }
+    100% {
+      transform: translateX(-110%);
+    }
+  }
+
+  @keyframes slidealt {
+    0% {
+      transform: translateX(calc(0% + 0px));
+    }
+    100% {
+      transform: translateX(-110%);
+    }
+  }
+</style>
