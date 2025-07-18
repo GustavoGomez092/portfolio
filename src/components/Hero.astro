@@ -7,6 +7,7 @@ import linkedin from "../assets/img/linkedin.svg"
 import CodeArea from "./CodeArea.astro"
 import video from "../assets/video/waves.mp4"
 import MarqueeWall from "./MarqueeWall.astro"
+import AboutTransition from "./AboutTransition.astro"
 ---
 
 <section class="site-hero">
@@ -24,8 +25,9 @@ import MarqueeWall from "./MarqueeWall.astro"
         <MarqueeWall />
       </div>
       <div class="bento-item bento-3 invert-area">
+        <AboutTransition />
         <video
-          class="bg-video"
+          class="bg-video z-2"
           width="600"
           height="100%"
           autoplay
@@ -41,9 +43,10 @@ import MarqueeWall from "./MarqueeWall.astro"
         <div class="image-section">
           <Image
             src={profilePic}
-            alt="Profile picture of Gustavo Gomez"
+            alt="Gustavo Gomez"
             width={200}
             height={200}
+            loading="eager"
           />
         </div>
         <div class="my-card">
@@ -57,7 +60,13 @@ import MarqueeWall from "./MarqueeWall.astro"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Image width={36} height={36} src={github} alt="GitHub" />
+            <Image
+              width={36}
+              height={36}
+              src={github}
+              alt="GitHub"
+              loading="eager"
+            />
           </a>
           <a
             class="hoverable"
@@ -65,13 +74,19 @@ import MarqueeWall from "./MarqueeWall.astro"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Image width={36} height={36} src={linkedin} alt="LinkedIn" />
+            <Image
+              width={36}
+              height={36}
+              src={linkedin}
+              alt="LinkedIn"
+              loading="eager"
+            />
           </a>
         </div>
       </div>
     </div>
   </div>
-  <div id="animation-target" class="w-full max-w-screen h-0 lg:h-[100vh]"></div>
+  <div id="animation-target" class="w-full max-w-screen h-0 lg:h-[200vh]"></div>
 </section>
 
 <script>
@@ -104,6 +119,7 @@ import MarqueeWall from "./MarqueeWall.astro"
     const bento3 = document.querySelector(".bento-3")
     const bento4 = document.querySelector(".bento-4")
     const bento5 = document.querySelector(".bento-5")
+    const almostAllBentos = [bento1, bento5, bento2, bento4]
     const allBentos = [bento3, bento1, bento5, bento2, bento4]
 
     if (!bento1 || !bento2 || !bento3 || !bento4 || !bento5) return
@@ -135,7 +151,6 @@ import MarqueeWall from "./MarqueeWall.astro"
             {
               x: 0,
               y: 0,
-              scale: 1,
             },
             {
               x: function (_, target) {
@@ -152,27 +167,26 @@ import MarqueeWall from "./MarqueeWall.astro"
                   Number(gsap.getProperty(target, "height")) / 2
                 )
               },
-              scale: function (_, target) {
-                if (!target.classList.contains("bento-3")) {
-                  return 0
-                } else {
-                  return 1
-                }
-              },
-              duration: 10,
-              stagger: 1.5,
+              duration: 5,
+              stagger: 0.7,
             }
+          ).to(
+            almostAllBentos,
+            {
+              scale: 0,
+              duration: 5,
+              stagger: 0.5,
+            },
+            "-=5"
           )
-          .fromTo(
+          .to(
             bento3,
             {
-              scale: 1,
-            },
-            {
-              duration: 20,
+              translateY: -500,
               scale: 10,
+              duration: 20,
             },
-            "-=9"
+            "-=4"
           )
           .to(
             ".bento-3 > .bg-video",
@@ -180,7 +194,7 @@ import MarqueeWall from "./MarqueeWall.astro"
               duration: 5,
               opacity: 0,
             },
-            "-=22"
+            "-=23"
           )
 
         return () => {
@@ -244,7 +258,6 @@ import MarqueeWall from "./MarqueeWall.astro"
           // custom cleanup code here (runs when it STOPS matching)
         }
       })
-
     })
   }
 
@@ -266,9 +279,12 @@ import MarqueeWall from "./MarqueeWall.astro"
   @reference '../styles/global.css';
 
   .site-hero {
-    @apply pt-28 lg:pt-8 h-auto flex flex-col items-center justify-center z-10 overflow-hidden;
+    @apply pt-28 lg:pt-8 h-auto flex flex-col items-center justify-center z-10;
     .main-section {
-      @apply w-screen max-w-site mx-auto h-full px-4 lg:px-10;
+      @apply w-screen max-w-site mx-auto h-full px-4 lg:px-10 overflow-hidden;
+      @media (min-width: 1024px) {
+        overflow: unset;
+      }
       .bento {
         @apply w-full h-auto lg:h-[calc(100vh_-_200px)] grid grid-cols-4 grid-rows-5 gap-4;
 
@@ -276,7 +292,7 @@ import MarqueeWall from "./MarqueeWall.astro"
           @apply rounded-lg p-6 origin-center;
         }
         .bento-1 {
-          @apply relative bg-slate-900 flex flex-col justify-between overflow-hidden z-10 h-[72vh] lg:h-full;
+          @apply relative bg-slate-900 flex flex-col justify-between overflow-hidden z-50 h-[72vh] lg:h-full;
           @apply col-span-4 lg:col-span-2 row-span-2 lg:row-span-4 col-start-1 row-start-1;
           h1 {
             @apply relative z-40 text-[28px] leading-tight lg:text-5xl font-bold text-white;
@@ -287,11 +303,11 @@ import MarqueeWall from "./MarqueeWall.astro"
           }
         }
         .bento-2 {
-          @apply hidden lg:block bg-gray-200 z-50 p-0 overflow-hidden;
+          @apply hidden lg:block bg-gray-200 z-40 p-0 overflow-hidden;
           @apply row-span-3 col-start-3;
         }
         .bento-3 {
-          @apply bg-black relative overflow-hidden z-60;
+          @apply bg-black relative overflow-hidden z-60 p-0;
           @apply row-span-1 col-span-4 lg:col-span-1 lg:row-span-2 col-start-1 lg:col-start-3 row-start-4;
           .bg-video {
             @apply absolute left-0 top-0 w-full h-full object-cover;

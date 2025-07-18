@@ -183,9 +183,7 @@
   @reference '../styles/global.css';
 
   .about-section {
-    @apply w-full mx-auto px-4 xl:px-0 py-12 lg:py-40 bg-black relative z-70 overflow-hidden;
-    box-shadow: 0 0 0 1px black;
-    .inner-container {
+    @apply w-full mx-auto px-4 xl:px-0 py-12 lg:py-40 bg-transparent bg-linear-to-t from-black via-90% via-black to-transparent relative z-70 overflow-hidden;    .inner-container {
       @apply w-full max-w-site mx-auto flex flex-col;
       .title-about {
         @apply text-[64px] lg:text-[128px] font-bold mb-4 text-white;

@@ -1,0 +1,96 @@
+---
+
+---
+
+<section class="about-transition">
+  <div class="element bg"></div>
+</section>
+
+<script>
+  import gsap from "gsap"
+  import { LifecycleManager } from "../scripts/animationLifecycle.ts"
+  import { ScrollTrigger } from "gsap/all"
+  import Lottie from "lottie-web"
+  import BG from "../assets/lottie/fullAnimation.json"
+
+  gsap.registerPlugin(ScrollTrigger)
+  const manager = new LifecycleManager()
+
+  const loadAnimation = () => {
+    const BGContainer = document.querySelector(".about-transition .bg")
+
+    if (!BGContainer) {
+      console.error("Lottie containers not found")
+      return
+    }
+
+    const bgAnimation = Lottie.loadAnimation({
+      container: BGContainer,
+      renderer: "svg",
+      loop: false,
+      autoplay: false,
+      animationData: BG,
+    })
+
+    const mm = gsap.matchMedia()
+    manager.ctx?.add(() => {
+      mm.add("(min-width: 1024px)", () => {
+        ScrollTrigger.create({
+          trigger: ".site-hero",
+          start: "center-=12% center",
+          end: "center+=20% center",
+          markers: false,
+          scrub: true,
+          onUpdate: (self) => {
+            const progress = Number(self.progress.toFixed(2))
+            const mapped = gsap.utils.mapRange(
+              0,
+              0.75,
+              0,
+              bgAnimation.totalFrames,
+              progress
+            )
+            bgAnimation.goToAndStop(mapped < 58 ? mapped : 58, true)
+          },
+        })
+      })
+      mm.add("(max-width: 1023px)", () => {
+        ScrollTrigger.create({
+          trigger: ".site-hero",
+          start: "center center",
+          end: "center+=100% center",
+          markers: false,
+          scrub: true,
+          onUpdate: (self) => {
+            const progress = Number(self.progress.toFixed(2))
+            const mapped = gsap.utils.mapRange(
+              0.1,
+              0.8,
+              0,
+              bgAnimation.totalFrames,
+              progress
+            )
+            bgAnimation.goToAndStop(mapped < 58 ? mapped : 58, true)
+          },
+        })
+      })
+    })
+  }
+
+  manager.onElementLoaded(".about-transition", () => {
+    loadAnimation()
+  })
+</script>
+
+<style>
+  @reference "../styles/global.css";
+  .about-transition {
+    @apply relative w-full h-full overflow-hidden z-1;
+    .element {
+      @apply absolute;
+      &.bg {
+        @apply z-1 object-contain;
+      }
+    }
+  }
+</style>

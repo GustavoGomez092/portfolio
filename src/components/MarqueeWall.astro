@@ -1,141 +1,303 @@
 ---
 import Image from "astro/components/Image.astro"
-import JSLogo from "../assets/img/JavaScript_logo.svg"
+import JS from "../assets/img/framework-logos/Javascript.jpg"
+import TS from "../assets/img/framework-logos/Typescript.jpg"
+import WP from "../assets/img/framework-logos/WordPress.jpg"
+import Vue from "../assets/img/framework-logos/Vue.jpg"
+import React from "../assets/img/framework-logos/React.jpg"
+import Vite from "../assets/img/framework-logos/Vite.jpg"
+import Three from "../assets/img/framework-logos/Three.jpg"
+import Tailwind from "../assets/img/framework-logos/Tailwind.jpg"
+import PS from "../assets/img/framework-logos/PS.jpg"
+import Prisma from "../assets/img/framework-logos/Prisma.jpg"
+import Postgres from "../assets/img/framework-logos/Postgres.jpg"
+import PHP from "../assets/img/framework-logos/PHP.jpg"
+import Next from "../assets/img/framework-logos/NextJS.jpg"
+import Nest from "../assets/img/framework-logos/NestJS.jpg"
+import Mongo from "../assets/img/framework-logos/Mongo.jpg"
+import GSAP from "../assets/img/framework-logos/GSAP.jpg"
+import GraphQL from "../assets/img/framework-logos/GraphQL.jpg"
+import Firebase from "../assets/img/framework-logos/Firebase.jpg"
+import Electron from "../assets/img/framework-logos/Electron.jpg"
+import C4D from "../assets/img/framework-logos/C4D.jpg"
+import AWS from "../assets/img/framework-logos/AWS.jpg"
+import Apollo from "../assets/img/framework-logos/Apollo.jpg"
+import AI from "../assets/img/framework-logos/AI.jpg"
+import AE from "../assets/img/framework-logos/AE.jpg"
+import AstroLogo from "../assets/img/framework-logos/Astro.jpg"
+import Figma from "../assets/img/framework-logos/Figma.jpg"
+import Nuxt from "../assets/img/framework-logos/Nuxt.jpg"
+import Express from "../assets/img/framework-logos/Express.jpg"
+import CSS from "../assets/img/framework-logos/CSS-logo.jpg"
+import Rive from "../assets/img/framework-logos/Rive.jpg"
 ---
 
 <section class="marquee-wall">
   <div class="marquee-container">
     <!-- Marquee Row 1 -->
     <div class="home-logo-wrapper">
-      <div class="clients-grid animate-slide">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      <div class="the-row original">
+        <div class="clients-grid animate-slide">
+          <Image src={JS} alt="JavaScript Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={TS} alt="TypeScript Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={PHP} alt="PHP Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={Next} alt="Next.js Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={Nuxt} alt="Nuxt.js Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={AstroLogo} alt="Astro Logo" class="client-logo" />
+        </div>
       </div>
-      <div class="clients-grid animate-slide">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      <div class="the-row clone">
+        <div class="clients-grid animate-slide">
+          <Image src={JS} alt="JavaScript Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={TS} alt="TypeScript Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={PHP} alt="PHP Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={CSS} alt="CSS Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={Mongo} alt="MongoDB Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={Postgres} alt="PostgreSQL Logo" class="client-logo" />
+        </div>
       </div>
     </div>
     <!-- Marquee Row 2 -->
     <div class="home-logo-wrapper reverse">
-      <div class="clients-grid animate-slide-alt">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      <div class="the-row original">
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Tailwind} alt="Tailwind CSS Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={GSAP} alt="GSAP Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={React} alt="React Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Vue} alt="Vue.js Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Electron} alt="Electron Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Three} alt="Three.js Logo" class="client-logo" />
+        </div>
       </div>
-      <div class="clients-grid animate-slide-alt">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide-alt">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide-alt">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide-alt">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide-alt">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      <div class="the-row clone">
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Tailwind} alt="Tailwind CSS Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={GSAP} alt="GSAP Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={React} alt="React Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Vue} alt="Vue.js Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Electron} alt="Electron Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Three} alt="Three.js Logo" class="client-logo" />
+        </div>
       </div>
     </div>
   </div>
   <div class="marquee-container">
     <!-- Marquee Row 1 -->
     <div class="home-logo-wrapper">
-      <div class="clients-grid animate-slide">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      <div class="the-row original">
+        <div class="clients-grid animate-slide">
+          <Image src={AE} alt="Adobe After Effects Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={PS} alt="Photoshop Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={AI} alt="Adobe Illustrator Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={C4D} alt="Cinema 4D Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={Figma} alt="Figma Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={Rive} alt="Rive Logo" class="client-logo" />
+        </div>
       </div>
-      <div class="clients-grid animate-slide">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      <div class="the-row clone">
+        <div class="clients-grid animate-slide">
+          <Image src={AE} alt="Adobe After Effects Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={PS} alt="Photoshop Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={AI} alt="Adobe Illustrator Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={C4D} alt="Cinema 4D Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={Figma} alt="Figma Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={Rive} alt="Rive Logo" class="client-logo" />
+        </div>
       </div>
     </div>
     <!-- Marquee Row 2 -->
     <div class="home-logo-wrapper reverse">
-      <div class="clients-grid animate-slide-alt">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      <div class="the-row original">
+        <div class="clients-grid animate-slide-alt">
+          <Image src={AWS} alt="AWS Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Firebase} alt="Firebase Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={GraphQL} alt="GraphQL Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Prisma} alt="Prisma Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Apollo} alt="Apollo Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Nest} alt="NestJS Logo" class="client-logo" />
+        </div>
       </div>
-      <div class="clients-grid animate-slide-alt">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide-alt">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide-alt">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide-alt">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide-alt">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      <div class="the-row clone">
+        <div class="clients-grid animate-slide-alt">
+          <Image src={AWS} alt="AWS Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Firebase} alt="Firebase Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={GraphQL} alt="GraphQL Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Prisma} alt="Prisma Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Apollo} alt="Apollo Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Nest} alt="NestJS Logo" class="client-logo" />
+        </div>
       </div>
     </div>
   </div>
-  <div class="marquee-container">
+    <div class="marquee-container">
     <!-- Marquee Row 1 -->
     <div class="home-logo-wrapper">
-      <div class="clients-grid animate-slide">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      <div class="the-row original">
+        <div class="clients-grid animate-slide">
+          <Image src={Vite} alt="Vite Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={Mongo} alt="MongoDB Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={Postgres} alt="PostgreSQL Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={WP} alt="WordPress Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={Nuxt} alt="Nuxt.js Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={Express} alt="Express Logo" class="client-logo" />
+        </div>
       </div>
-      <div class="clients-grid animate-slide">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      <div class="the-row clone">
+        <div class="clients-grid animate-slide">
+          <Image src={Vite} alt="Vite Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={Mongo} alt="MongoDB Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={Postgres} alt="PostgreSQL Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={WP} alt="WordPress Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={Nuxt} alt="Nuxt.js Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide">
+          <Image src={Express} alt="Express Logo" class="client-logo" />
+        </div>
       </div>
     </div>
     <!-- Marquee Row 2 -->
     <div class="home-logo-wrapper reverse">
-      <div class="clients-grid animate-slide-alt">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      <div class="the-row original">
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Tailwind} alt="Tailwind CSS Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={GSAP} alt="GSAP Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={React} alt="React Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Vue} alt="Vue.js Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Electron} alt="Electron Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Three} alt="Three.js Logo" class="client-logo" />
+        </div>
       </div>
-      <div class="clients-grid animate-slide-alt">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide-alt">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide-alt">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide-alt">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
-      </div>
-      <div class="clients-grid animate-slide-alt">
-        <Image src={JSLogo} alt="JavaScript Logo" class="client-logo" />
+      <div class="the-row clone">
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Tailwind} alt="Tailwind CSS Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={GSAP} alt="GSAP Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={React} alt="React Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Vue} alt="Vue.js Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Electron} alt="Electron Logo" class="client-logo" />
+        </div>
+        <div class="clients-grid animate-slide-alt">
+          <Image src={Three} alt="Three.js Logo" class="client-logo" />
+        </div>
       </div>
     </div>
   </div>
+  
 </section>
 
 <style>
@@ -148,25 +310,38 @@ import JSLogo from "../assets/img/JavaScript_logo.svg"
         @apply mt-4;
       }
       .home-logo-wrapper {
-        @apply relative flex gap-x-2 items-center justify-center w-[200%];
+        @apply relative flex gap-x-2 items-center justify-center w-full h-24;
 
         &.reverse {
           @apply mt-4;
         }
 
-        .clients-grid {
-          @apply flex gap-12 w-24 h-24 p-2 bg-white rounded-lg;
+        .the-row {
+          @apply flex items-center justify-between w-full;
 
-          .client-logo {
-            @apply h-full w-full object-contain object-center;
+          &.original {
+            @apply absolute left-0 top-0 flex gap-x-2 items-center justify-center w-[220%];
           }
 
-          &.animate-slide {
-            animation: slide 2s linear infinite;
+          &.clone {
+            @apply absolute left-0 top-0 flex gap-x-2 items-center justify-center w-[200%];
+            transform: translateX(100%);
           }
 
-          &.animate-slide-alt {
-            animation: slidealt 2s linear infinite reverse;
+          .clients-grid {
+            @apply flex gap-12 w-24 h-24 p-2 bg-white rounded-lg;
+
+            .client-logo {
+              @apply h-full w-full object-contain object-center;
+            }
+
+            &.animate-slide {
+              animation: slide 15s linear infinite;
+            }
+
+            &.animate-slide-alt {
+              animation: slidealt 15s linear infinite reverse;
+            }
           }
         }
       }
@@ -175,19 +350,19 @@ import JSLogo from "../assets/img/JavaScript_logo.svg"
 
   @keyframes slide {
     0% {
-      transform: translateX(calc(0% + 0px));
+      transform: translateX(calc(0% - 50px));
     }
     100% {
-      transform: translateX(-110%);
+      transform: translateX(-700%);
     }
   }
 
   @keyframes slidealt {
     0% {
-      transform: translateX(calc(0% + 0px));
+      transform: translateX(calc(0% - 50px));
     }
     100% {
-      transform: translateX(-110%);
+      transform: translateX(-700%);
     }
   }
 </style>
