@@ -1,0 +1,140 @@
+<section id="rotating-stamp-container" class="hoverable">
+  <div id="circle">
+    <svg
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="70 70 160 160"
+      xml:space="preserve"
+    >
+      <defs>
+        <path
+          id="circlePath"
+          d="M 150, 150 m -60, 0 a 60,60 0 0,1 120,0 a 60,60 0 0,1 -120,0 "
+        ></path>
+      </defs>
+      <circle cx="150" cy="100" r="75" fill="none"></circle>
+      <g>
+        <use xlink:href="#circlePath" fill="none"></use>
+        <text>
+          <textPath xlink:href="#circlePath" id="circle-textPath">
+            SEASONED ** GENERALIST **
+          </textPath>
+        </text>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<script>
+  import gsap from "gsap"
+  import { LifecycleManager } from "../scripts/animationLifecycle.ts"
+
+  const adjectives = [
+    "SEASONED",
+    "EXPERIENCED",
+    "VERSATILE",
+    "ADAPTABLE",
+    "DYNAMIC",
+    "PROFICIENT",
+    "RESOURCEFUL",
+    "INNOVATIVE",
+    "SKILLED",
+    "EXPERT",
+    "ACCOMPLISHED",
+    "COMPETENT",
+    "EFFICIENT",
+  ]
+
+  const subjects = [
+    "GENERALIST",
+    "DEVELOPER",
+    "DESIGNER",
+    "SCRIPTER",
+    "ENGINEER",
+    "PROGRAMMER",
+    "ARCHITECT",
+    "CONSULTANT",
+    "SPECIALIST",
+    "INNOVATOR",
+    "CREATOR",
+  ]
+
+  const manager = new LifecycleManager()
+
+  const randomCombination = () => {
+    const path = document.querySelector("#circlePath")
+    const textPath = document.querySelector("#circle-textPath")
+
+    if (!(path instanceof SVGPathElement) || !textPath) return ""
+
+    const totalLength = path.getTotalLength()
+
+    const randomAdjective =
+      adjectives[Math.floor(Math.random() * adjectives.length)]
+    const randomSubject = subjects[Math.floor(Math.random() * subjects.length)]
+    const newString = `${randomAdjective} ** ${randomSubject} **`
+
+    // Set attributes to stretch text across the path
+    textPath.setAttribute("textLength", (totalLength - 7).toString())
+    textPath.setAttribute("lengthAdjust", "spacingAndGlyphs")
+
+    return newString
+  }
+
+  manager.onElementLoaded("#rotating-stamp-container", () => {
+    manager.ctx?.add(() => {
+      const rotatingStamp = document.querySelector("#rotating-stamp-container")
+      if (!rotatingStamp) return
+
+      const animation = gsap.timeline().to(rotatingStamp, {
+        rotation: 360,
+        ease: "none",
+        duration: 20,
+        repeat: -1,
+      })
+
+      // hover event listener for rotating faster
+      rotatingStamp.addEventListener("mouseenter", () => {
+        gsap.to(animation, {
+          timeScale: 5,
+          duration: 1,
+        })
+      })
+
+      rotatingStamp.addEventListener("mouseleave", () => {
+        gsap.to(animation, {
+          timeScale: 1,
+          duration: 1,
+        })
+      })
+    })
+
+    // Change text content every 3 seconds
+    setInterval(() => {
+      const textPath = document.querySelector("#circle-textPath")
+      if (!textPath) return
+      textPath.textContent = randomCombination()
+    }, 10000)
+  })
+</script>
+
+<style>
+  @reference "../styles/global.css";
+
+  #rotating-stamp-container {
+    @apply w-[200px] lg:w-[250px] h-[200px] lg:h-[250px] absolute right-[-130px] lg:right-36 top-10 lg:top-0 overflow-hidden;
+
+    #circle {
+      @apply relative w-full pb-[100%] overflow-hidden;
+
+      svg {
+        @apply absolute top-0 left-0 w-full h-full;
+      }
+
+      text {
+        @apply font-sans font-bold text-[26px] fill-white;
+      }
+    }
+  }
+</style>

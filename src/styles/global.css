@@ -8,6 +8,56 @@
   --spacing-site: 1440px;
 }
 
+/* pretendard-latin-200-normal */
+@font-face {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200;
+  src: url(@fontsource/pretendard/files/pretendard-latin-200-normal.woff2)
+    format("woff2");
+}
+
+/* pretendard-latin-400-normal */
+@font-face {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(@fontsource/pretendard/files/pretendard-latin-400-normal.woff2)
+    format("woff2");
+}
+
+/* pretendard-latin-500-normal */
+@font-face {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(@fontsource/pretendard/files/pretendard-latin-500-normal.woff2)
+    format("woff2");
+}
+
+/* pretendard-latin-700-normal */
+@font-face {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(@fontsource/pretendard/files/pretendard-latin-700-normal.woff2)
+    format("woff2");
+}
+
+/* pretendard-latin-900-normal */
+@font-face {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 900;
+  src: url(@fontsource/pretendard/files/pretendard-latin-900-normal.woff2)
+    format("woff2");
+}
+
 @layer base {
   body {
     font-family: "Pretendard", sans-serif;
