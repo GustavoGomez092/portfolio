@@ -1,0 +1,310 @@
+---
+import ProjectSlide from "./ProjectSlide.astro"
+import { getCollection } from "astro:content";
+import {ContentCollections} from "../collections/types";
+
+const projects = await getCollection(ContentCollections.PORTFOLIO);
+---
+
+<section class="projects-slider invert-area">
+  <div class="title-container">
+    <h2 class="projects-slider-title">Projects</h2>
+  </div>
+  <div class="projects-slider-container">
+    <div class="slides">
+      {projects.map((project, index) => (
+        <ProjectSlide
+          title={project.data.title}
+          title2={project.data.title2}
+          description={project.data.description}
+          date={project.data.date}
+          siteURL={project.data.siteURL}
+          achievements={project.data.achievements}
+          images={project.data.images}
+          isCurrent={index === 0} // Assuming the first project is the current one
+        />
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap"
+  import LifecycleManager from "../scripts/animationLifecycle"
+  import { ScrollTrigger } from "gsap/all"
+  import { SplitText } from "gsap/all"
+
+  gsap.registerPlugin(SplitText)
+  gsap.registerPlugin(ScrollTrigger)
+
+  new SplitText("[data-splitting]", {
+    type: "chars",
+    charsClass: "char",
+  })
+
+  interface SlideshowDOM {
+    el: Element | null | undefined
+    navigation?: {
+      prev: Element | null | undefined
+      next: Element | null | undefined
+    }
+  }
+
+  type Direction = "next" | "prev"
+
+  // Define the Slide class to represent each slide
+  class Slide {
+    DOM: {
+      el: Element
+      imgs: Element[]
+      info: Element[]
+      chars: Element[]
+    }
+    constructor(el: Element) {
+      this.DOM = {
+        el: el,
+        imgs: Array.from(el.querySelectorAll(".slide__img")),
+        info: Array.from(el.querySelectorAll(".slide__content")),
+        chars: Array.from(el.querySelectorAll(".slide__title-inner")).flatMap(
+          (titleInner: Element) =>
+            Array.from(titleInner.querySelectorAll(".char"))
+        ),
+      }
+    }
+  }
+
+  class Slideshow {
+    DOM: SlideshowDOM
+    slides: any[]
+    current: number
+    slidesTotal: number
+    positions: any
+    isAnimating?: boolean
+
+    constructor(el: Element) {
+      this.DOM = { el: el }
+
+      // Initialize the Slide instances and store that in an array
+      this.slides = []
+      const slideNodes = this.DOM.el?.querySelectorAll(".slide")
+      if (slideNodes) {
+        ;[...slideNodes].forEach((slide) => this.slides.push(new Slide(slide)))
+      }
+
+      // Index of the current slide
+      this.current = 0
+      // Total slides
+      this.slidesTotal = this.slides.length
+      // positions (in percentages) for the images movement for both directions
+      // example: the second image (top right one) will translate in the y-axis -150% when clicking the next button but when clicking the prev button it will instead translate in the x-axis 150%
+      this.positions = {
+        x: {
+          next: [-150, 0, 0, 150],
+          prev: [0, 150, -150, 0],
+        },
+        y: {
+          next: [0, -150, 150, 0],
+          prev: [-150, 0, 0, 150],
+        },
+      }
+      this.initEvents()
+    }
+    initEvents() {
+      const mainContainer = document.querySelector(".projects-slider")
+      const innerContainer = document.querySelector(
+        ".projects-slider-container"
+      )
+      if (!mainContainer)
+        return // set the container height to the viewport height times the amount of slides
+      ;(mainContainer as HTMLElement).style.height =
+        `${this.slidesTotal * 100}vh`
+
+      ScrollTrigger.refresh()
+
+      // Initialize the scrollTrigger
+      const that = this
+      ScrollTrigger.create({
+        trigger: innerContainer,
+        endTrigger: mainContainer,
+        start: "top top-=10%",
+        end: "bottom bottom",
+        pin: true,
+        onUpdate: function (self) {
+          // Calculate the current slide based on the scroll progress
+          const theProgress = parseFloat(self.progress.toFixed(2))
+          const newSlide = Math.floor(theProgress * that.slidesTotal)
+          if (
+            newSlide !== that.current &&
+            newSlide >= 0 &&
+            newSlide < that.slidesTotal
+          ) {
+            that.navigate(newSlide > that.current ? "next" : "prev")
+          }
+        },
+        markers: false,
+        pinSpacing: false,
+      })
+    }
+    navigate(direction: Direction) {
+      // if (this.isAnimating) {
+      //   return false
+      // }
+
+      const currentSlide = this.slides[this.current]
+      this.current =
+        direction === "next"
+          ? this.current < this.slidesTotal - 1
+            ? ++this.current
+            : 0
+          : this.current > 0
+            ? --this.current
+            : this.slidesTotal - 1
+      const nextSlide = this.slides[this.current]
+
+      gsap
+        .timeline({
+          defaults: { duration: 0.8, ease: "power4.inOut" },
+          onStart: () => {
+            // this.isAnimating = true
+          },
+          onComplete: () => {
+            // Remove "current" class
+            currentSlide.DOM.el.classList.remove("slide--current")
+            // this.isAnimating = false
+          },
+        })
+        .addLabel("start", 0)
+        // Animate current title out (stagger the characters)
+        .to(
+          currentSlide.DOM.chars,
+          {
+            y: direction === "next" ? "100%" : "-100%",
+            rotation: direction === "next" ? 3 : -3,
+            stagger: direction === "next" ? -0.015 : 0.015,
+          },
+          "start"
+        )
+        // Animate current images out
+        .to(
+          currentSlide.DOM.imgs,
+          {
+            x: (pos) => `${this.positions.x[direction][pos]}%`,
+            y: (pos) => `${this.positions.y[direction][pos]}%`,
+            opacity: 0,
+          },
+          "start"
+        )
+        // Animate current info out
+        .to(
+          currentSlide.DOM.info,
+          {
+            opacity: 0,
+            duration: 0.4,
+          },
+          "start"
+        )
+        .addLabel("upcoming", 0.4)
+        .add(() => {
+          // Set up upcoming images and text default style:
+          gsap.set(nextSlide.DOM.imgs, { opacity: 0 })
+          gsap.set(nextSlide.DOM.chars, {
+            y: direction === "next" ? "-100%" : "100%",
+            rotation: direction === "next" ? 3 : -3,
+          })
+          // Add "current" class
+          nextSlide.DOM.el.classList.add("slide--current")
+        }, "upcoming")
+        // Animate upcoming title in (stagger the characters)
+        .to(
+          nextSlide.DOM.chars,
+          {
+            y: "0%",
+            rotation: 0,
+            ease: "power4",
+            stagger: direction === "next" ? -0.015 : 0.015,
+          },
+          "upcoming"
+        )
+        // Animate upcoming info in
+        .to(
+          nextSlide.DOM.info,
+          {
+            opacity: 1,
+            duration: 0.4,
+          },
+          "upcoming"
+        )
+        // Animate upcoming images in
+        .to(
+          nextSlide.DOM.imgs,
+          {
+            startAt: {
+              x: (pos) =>
+                `${this.positions.x[this.reverseDirection(direction)][pos]}%`,
+              y: (pos) =>
+                `${this.positions.y[this.reverseDirection(direction)][pos]}%`,
+            },
+            x: "0%",
+            y: "0%",
+            opacity: 0.4,
+            ease: "power4",
+          },
+          "upcoming"
+        )
+    }
+    reverseDirection(direction: Direction) {
+      return direction === "next" ? "prev" : "next"
+    }
+  }
+
+  const selector = document.querySelector(".slides")
+  const title = document.querySelector(".projects-slider-title")
+
+  const manager = new LifecycleManager()
+
+  manager.onElementLoaded('.projects-slider', () => {
+    manager.ctx?.add(() => {
+      gsap.timeline().fromTo(
+        title,
+        { y: "115%" },
+        {
+          y: "20%",
+          duration: 1,
+        ease: "power4.out",
+        scrollTrigger: {
+          trigger: title,
+          start: "top-=150% center",
+          end: "bottom-=100% center",
+          scrub: true,
+          markers: false
+        },
+      }
+    )
+    })
+  })
+
+  if (selector) {
+    // Initialize the slideshow
+    new Slideshow(selector)
+  }
+</script>
+
+<style>
+  @reference "../styles/global.css";
+  .projects-slider {
+    @apply bg-black;
+    box-shadow: 0 0 0 20px #000;
+    .title-container {
+      @apply w-full max-w-[1440px] mx-auto overflow-hidden p-6;
+      .projects-slider-title {
+        @apply text-white text-4xl font-bold mb-4 z-50 text-[64px] lg:text-[128px];
+      }
+    }
+    .projects-slider-container {
+      @apply pt-28;
+      .slides {
+        @apply w-screen h-screen z-[70] relative grid grid-rows-[100%] grid-cols-[100%] min-h-[700px] items-center;
+      }
+    }
+  }
+</style>

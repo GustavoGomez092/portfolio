@@ -1,0 +1,168 @@
+---
+import Image from "astro/components/Image.astro"
+
+const {
+  title,
+  title2,
+  description,
+  date,
+  siteURL,
+  achievements,
+  images,
+  isCurrent,
+} = Astro.props
+---
+
+<div class={isCurrent ? "slide slide--current" : "slide"}>
+  <div class="slide__content">
+    <div class="left-side">
+      <div class="overview">
+        <p class="slide__description">{description}</p>
+      </div>
+      <div class="highlights">
+        <p class="text-xl mb-4">Highlights:</p>
+        {
+          achievements && achievements.length > 0 && (
+            <ul class={achievements.length > 3 ? "slide__achievements columns-2" : "slide__achievements"}>
+              {achievements.map((achievement: string) => (
+                <li class="slide__achievement mb-0 lg:mb-4">{achievement}</li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+    </div>
+    <div class="right-side">
+      <div class="slide__date">
+        <p class="slide__date-text text-xl">
+          Project date
+        </p>
+      <p>{date}</p>
+      </div>
+      <a href={siteURL} target="_blank" class="slide__link text-xl"> Visit Project </a>
+    </div>
+  </div>
+  <div class="slide__img-wrap">
+    <Image
+      class="slide__img slide__img--1"
+      src={images[0].src}
+      alt={images[0].alt}
+    />
+    <Image
+      class="slide__img slide__img--2"
+      src={images[1].src}
+      alt={images[1].alt}
+    />
+    <div class="break"></div>
+    <Image
+      class="slide__img slide__img--3"
+      src={images[2].src}
+      alt={images[2].alt}
+    />
+    <Image
+      class="slide__img slide__img--4"
+      src={images[3].src}
+      alt={images[3].alt}
+    />
+  </div>
+  <h2 class="slide__title">
+    <span class="slide__title-inner" data-splitting>{title}</span>
+    {
+      title2 && (
+        <span class="slide__title-inner" data-splitting>
+          {title2}
+        </span>
+      )
+    }
+  </h2>
+</div>
+
+<style>
+  @reference "../styles/global.css";
+  .slide {
+    @apply relative flex items-center justify-center w-full h-full mx-auto opacity-0 pointer-events-none [grid-area:1/1/2/2];
+    .slide__content {
+      @apply absolute top-0 left-0 w-full h-full flex flex-row justify-between p-4 pt-6 lg:pt-16 lg:p-10 text-white z-20;
+      .left-side {
+        @apply flex flex-col justify-between;
+        .overview {
+          @apply mb-4;
+          .slide__description {
+            @apply text-lg lg:text-xl max-w-[600px] leading-snug lg:leading-relaxed;
+          }
+        }
+        .highlights {
+          @apply mt-4;
+          .slide__achievements {
+            @apply list-disc pl-6;
+            .slide__achievement {
+              @apply mb-2 text-sm lg:text-base;
+            }
+          }
+        }
+      }
+      .right-side {
+        @apply hidden lg:flex flex-col justify-between;
+        .slide__date {
+          @apply text-sm lg:text-base mb-2;
+        }
+        .slide__link {
+          @apply text-orange-300 hover:text-white transition-colors;
+          &:hover {
+            @apply underline;
+          }
+        }
+      }
+    }
+    &.slide--current {
+      @apply opacity-100 pointer-events-auto;
+    }
+    .slide__img-wrap {
+      @apply flex flex-wrap items-center justify-center self-center content-center min-w-[790px] w-full h-[calc(100%-6rem)] rotate-[-22.5deg] origin-center;
+      .slide__img {
+        @apply opacity-40 flex-none block bg-cover bg-center h-[calc(50%-1.5rem)] object-cover;
+
+        &.slide__img--1,
+        &.slide__img--4 {
+          @apply h-[calc(50%+3rem)];
+          @apply w-[25%];
+        }
+
+        &.slide__img--1,
+        &.slide__img--3 {
+          @apply mr-6;
+        }
+
+        &.slide__img--1,
+        &.slide__img--2 {
+          @apply mb-6;
+        }
+
+        &.slide__img--2 {
+          @apply self-end;
+          @apply w-[42%];
+        }
+
+        &.slide__img--3 {
+          @apply self-start;
+          @apply w-[42%];
+        }
+      }
+      .break {
+        @apply basis-full h-0;
+      }
+    }
+    .slide__title {
+      @apply absolute text-white top-0 left-0 w-full h-full text-[clamp(2rem,10vw,8rem)] font-normal uppercase text-center leading-none flex flex-col items-center justify-center select-none;
+      .slide__title-inner {
+        @apply relative overflow-hidden flex;
+        &:span {
+          @apply relative;
+        }
+        &.slide__title-inner--middle {
+          @apply text-[2.5rem] font-light normal-case block;
+        }
+      }
+    }
+  }
+</style>

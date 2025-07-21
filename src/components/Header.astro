@@ -1,7 +1,10 @@
 ---
 import { Image } from "astro:assets"
+import { ContentCollections } from "../collections/types";
+import { getCollection } from 'astro:content';
 import Logo from "../assets/img/logo.svg"
-import menu from "../collections/menu.json"
+
+const menu = await getCollection(ContentCollections.MENU);
 ---
 
 <nav>
@@ -13,10 +16,10 @@ import menu from "../collections/menu.json"
   <div class="menu">
     <ul class="menu-list">
       {
-        menu.menuItems.map((item) => {
+        menu.map((item) => {
           return (
             <li class="menu-item hoverable">
-              <a href={item.url}>{item.name}</a>
+              <a href={item.data.url}>{item.data.title}</a>
             </li>
           )
         })

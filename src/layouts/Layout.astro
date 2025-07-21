@@ -50,6 +50,11 @@ initSmoothScrolling()
 
 <style>
   body {
-    @apply bg-[#f3f4f6];
+    overscroll-behavior: none;
+    #smooth-wrapper {
+      #smooth-content {
+        will-change: transform;
+      }
+    }
   }
 </style>

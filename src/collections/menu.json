@@ -1,15 +1,18 @@
 {
   "menuItems": [
     {
-      "name": "About",
+      "id": "about",
+      "title": "About",
       "url": "#about"
     },
     {
-      "name": "Projects",
+      "id": "projects",
+      "title": "Projects",
       "url": "#projects"
     },
     {
-      "name": "Contact",
+      "id": "contact",
+      "title": "Contact",
       "url": "#contact"
     }
   ]
