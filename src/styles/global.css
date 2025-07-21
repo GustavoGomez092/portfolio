@@ -61,7 +61,6 @@
 @layer base {
   body {
     font-family: "Pretendard", sans-serif;
-    overflow-x: hidden;
     cursor: none;
     a {
       cursor: none;

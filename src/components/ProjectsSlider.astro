@@ -266,7 +266,7 @@ const projects = await getCollection(ContentCollections.PORTFOLIO);
     manager.ctx?.add(() => {
       gsap.timeline().fromTo(
         title,
-        { y: "115%" },
+        { y: "150%" },
         {
           y: "20%",
           duration: 1,
@@ -292,18 +292,18 @@ const projects = await getCollection(ContentCollections.PORTFOLIO);
 <style>
   @reference "../styles/global.css";
   .projects-slider {
-    @apply bg-black;
-    box-shadow: 0 0 0 20px #000;
+    @apply bg-black overflow-hidden;
+    box-shadow: 0px 0px 0px 1px #000;
     .title-container {
       @apply w-full max-w-[1440px] mx-auto overflow-hidden p-6;
       .projects-slider-title {
-        @apply text-white text-4xl font-bold mb-4 z-50 text-[64px] lg:text-[128px];
+        @apply text-white text-4xl font-bold mb-0 lg:mb-4 z-50 text-[64px] lg:text-[128px];
       }
     }
     .projects-slider-container {
-      @apply pt-28;
+      @apply pt-28 h-dvh;
       .slides {
-        @apply w-screen h-screen z-[70] relative grid grid-rows-[100%] grid-cols-[100%] min-h-[700px] items-center;
+        @apply w-screen h-dvh z-[70] relative grid grid-rows-[100%] grid-cols-[100%] min-h-[700px] items-center;
       }
     }
   }

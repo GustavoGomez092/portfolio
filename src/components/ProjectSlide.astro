@@ -82,9 +82,9 @@ const {
   .slide {
     @apply relative flex items-center justify-center w-full h-full mx-auto opacity-0 pointer-events-none [grid-area:1/1/2/2];
     .slide__content {
-      @apply absolute top-0 left-0 w-full h-full flex flex-row justify-between p-4 pt-6 lg:pt-16 lg:p-10 text-white z-20;
+      @apply absolute top-0 left-0 w-full h-full flex flex-row justify-between p-4 pt-0 lg:pt-16 lg:p-10 text-white z-20;
       .left-side {
-        @apply flex flex-col justify-between;
+        @apply flex flex-col justify-between mb-8;
         .overview {
           @apply mb-4;
           .slide__description {
@@ -96,7 +96,7 @@ const {
           .slide__achievements {
             @apply list-disc pl-6;
             .slide__achievement {
-              @apply mb-2 text-sm lg:text-base;
+              @apply mb-0.5 lg:mb-2 text-sm lg:text-base;
             }
           }
         }
