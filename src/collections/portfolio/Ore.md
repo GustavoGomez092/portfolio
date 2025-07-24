@@ -16,10 +16,10 @@ images:
 siteURL: https://ore.design/
 achievements:
   [
-    Lead Project Developer,
-    Lottie Animations,
-    Product customizer,
-    PDF quote generarator,
-    API development,
+    { achievement: "Lead Project Developer" },
+    { achievement: "Lottie Animations" },
+    { achievement: "Product customizer" },
+    { achievement: "PDF quote generator" },
+    { achievement: "API development" },
   ]
 ---

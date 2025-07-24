@@ -33,7 +33,14 @@ const Portfolio = defineCollection({
         .min(4)
         .max(6),
       siteURL: z.string().url().optional(),
-      achievements: z.array(z.string()).optional(),
+      achievements: z
+        .array(
+          z.object({
+            achievement: z.string(),
+            URL: z.string().optional(),
+          })
+        )
+        .optional(),
     }),
 })
 

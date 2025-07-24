@@ -13,11 +13,14 @@ images:
 siteURL: https://www.capstantx.com/
 achievements:
   [
-    Lead Project developer,
-    Animations with Spline.design,
-    SVG animations,
-    API connection with JazzHR,
-    GraphQL API implementation,
-    Lottie animations,
+    { achievement: "Lead Project developer" },
+    { achievement: "Animations with Spline.design" },
+    { achievement: "Lottie animations" },
+    { achievement: "API connection with JazzHR" },
+    { achievement: "GraphQL API implementation" },
+    {
+      achievement: "Award Winning website",
+      URL: "https://collisionawards.com/winners/2025/digital-communication/general/pharmaceutical/capstan-website/601684/",
+    },
   ]
 ---
