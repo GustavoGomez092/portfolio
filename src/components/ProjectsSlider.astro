@@ -1,4 +1,7 @@
 ---
+// Design and code inspired by Codrop's Diagonal Thumbnails Slideshow
+// https://tympanus.net/Development/DiagonalThumbnails/
+
 import ProjectSlide from "./ProjectSlide.astro"
 import { getCollection } from "astro:content";
 import {ContentCollections} from "../collections/types";
@@ -20,7 +23,7 @@ const projects = await getCollection(ContentCollections.PORTFOLIO);
           date={project.data.date}
           siteURL={project.data.siteURL}
           achievements={project.data.achievements}
-          images={project.data.images}
+          assets={project.data.assets}
           isCurrent={index === 0} // Assuming the first project is the current one
         />
       ))}

@@ -9,27 +9,58 @@ const {
   date,
   siteURL,
   achievements,
-  images,
+  assets,
   isCurrent,
 } = Astro.props
 
+const mappedAssets = assets.map(
+  (asset: { src?: string; videoSrc?: string; alt: string }) => {
+    if (asset.videoSrc) {
+      return {
+        ...asset,
+        videoSrc: `/portfolio${asset.videoSrc}`,
+      }
+    }
+    return asset
+  }
+)
+
+const topAssets = mappedAssets.slice(0, 2)
+const bottomAssets = mappedAssets.slice(2, 4)
 ---
 
 <div class={isCurrent ? "slide slide--current" : "slide"}>
   <div class="slide__content">
     <div class="left-side">
       <div class="overview">
-        <p class="slide__description backdrop-blur-xs bg-slate-900/10 p-4 rounded-xl">{description}</p>
+        <p
+          class="slide__description backdrop-blur-xs bg-slate-900/10 p-4 rounded-xl"
+        >
+          {description}
+        </p>
       </div>
       <div class="highlights">
         <p class="text-xl mb-4">Highlights:</p>
         {
           achievements && achievements.length > 0 && (
-            <ul class={achievements.length > 3 ? "slide__achievements columns-2" : "slide__achievements"}>
+            <ul
+              class={
+                achievements.length > 3
+                  ? "slide__achievements columns-2"
+                  : "slide__achievements"
+              }
+            >
               {achievements.map((achievement: Achievement) => (
                 <li class="slide__achievement mb-0 lg:mb-4">
                   {achievement.URL ? (
-                    <a href={achievement.URL} target="_blank" class="slide__link hoverable bg-transparent hover:bg-orange-500 border border-solid border-white hover:border-orange-500 text-white px-2 py-1 mt-2 rounded-full transition-colors ease-in-out duration-300"> {achievement.achievement} </a>
+                    <a
+                      href={achievement.URL}
+                      target="_blank"
+                      class="slide__link hoverable bg-transparent hover:bg-orange-500 border border-solid border-white hover:border-orange-500 text-white px-2 py-1 mt-2 rounded-full transition-colors ease-in-out duration-300"
+                    >
+                      {" "}
+                      {achievement.achievement}{" "}
+                    </a>
                   ) : (
                     <span class="slide__link"> {achievement.achievement} </span>
                   )}
@@ -42,36 +73,76 @@ const {
     </div>
     <div class="right-side">
       <div class="slide__date">
-        <p class="slide__date-text text-xl">
-          Project date
-        </p>
-      <p>{date}</p>
+        <p class="slide__date-text text-xl">Project date</p>
+        <p>{date}</p>
       </div>
-      <a href={siteURL} target="_blank" class="slide__link text-xl"> Visit Project </a>
+      <a href={siteURL} target="_blank" class="slide__link text-xl">
+        Visit Project
+      </a>
     </div>
   </div>
   <div class="slide__img-wrap">
-    <Image
-      class="slide__img slide__img--1"
-      src={images[0].src}
-      alt={images[0].alt}
-    />
-    <Image
-      class="slide__img slide__img--2"
-      src={images[1].src}
-      alt={images[1].alt}
-    />
+    {
+      topAssets &&
+        topAssets.length > 0 &&
+        topAssets.map(
+          (
+            asset: { src: any; alt: string; videoSrc: string },
+            index: number
+          ) =>
+            asset.src ? (
+              <Image
+                class={`slide__img slide__img--${index + 1}`}
+                src={asset.src}
+                alt={asset.alt}
+              />
+            ) : (
+              asset.videoSrc && (
+                <video
+                  preload="none"
+                  autoplay
+                  loop
+                  muted
+                  playsinline
+                  class={`slide__img slide__img--${index + 1}`}
+                >
+                  <source src={asset.videoSrc} />
+                </video>
+              )
+            )
+        )
+    }
     <div class="break"></div>
-    <Image
-      class="slide__img slide__img--3"
-      src={images[2].src}
-      alt={images[2].alt}
-    />
-    <Image
-      class="slide__img slide__img--4"
-      src={images[3].src}
-      alt={images[3].alt}
-    />
+    {
+      bottomAssets &&
+        bottomAssets.length > 0 &&
+        bottomAssets.map(
+          (
+            asset: { src: any; alt: string; videoSrc: string },
+            index: number
+          ) =>
+            asset.src ? (
+              <Image
+                class={`slide__img slide__img--${index + 3}`}
+                src={asset.src}
+                alt={asset.alt}
+              />
+            ) : (
+              asset.videoSrc && (
+                <video
+                  preload="none"
+                  autoplay
+                  loop
+                  muted
+                  playsinline
+                  class={`slide__img slide__img--${index + 3}`}
+                >
+                  <source src={asset.videoSrc} />
+                </video>
+              )
+            )
+        )
+    }
   </div>
   <h2 class="slide__title">
     <span class="slide__title-inner" data-splitting>{title}</span>
@@ -163,7 +234,7 @@ const {
     .slide__title {
       @apply absolute text-white top-0 left-0 w-full h-full text-[clamp(2rem,10vw,8rem)] font-normal uppercase text-center leading-none flex flex-col items-center justify-center select-none;
       .slide__title-inner {
-        @apply relative overflow-hidden flex;
+        @apply relative overflow-hidden;
         &:span {
           @apply relative;
         }

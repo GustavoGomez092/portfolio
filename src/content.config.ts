@@ -23,10 +23,11 @@ const Portfolio = defineCollection({
       title2: z.string().optional(),
       description: z.string().optional(),
       date: z.string().optional(),
-      images: z
+      assets: z
         .array(
           z.object({
-            src: image(),
+            src: image().optional(),
+            videoSrc: z.string().optional(),
             alt: z.string().optional(),
           })
         )
