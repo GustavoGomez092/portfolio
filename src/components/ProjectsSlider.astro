@@ -3,10 +3,17 @@
 // https://tympanus.net/Development/DiagonalThumbnails/
 
 import ProjectSlide from "./ProjectSlide.astro"
-import { getCollection } from "astro:content";
-import {ContentCollections} from "../collections/types";
+import { getCollection } from "astro:content"
+import { ContentCollections } from "../collections/types"
 
-const projects = await getCollection(ContentCollections.PORTFOLIO);
+const unsortedProjects = await getCollection(ContentCollections.PORTFOLIO)
+
+const projects = unsortedProjects.sort((a, b) => {
+  // Sort by date in descending order, fallback to 0 if date is missing
+  const dateA = a.data.date ? new Date(a.data.date).getTime() : 0
+  const dateB = b.data.date ? new Date(b.data.date).getTime() : 0
+  return dateB - dateA
+})
 ---
 
 <section class="projects-slider invert-area">
@@ -15,18 +22,30 @@ const projects = await getCollection(ContentCollections.PORTFOLIO);
   </div>
   <div class="projects-slider-container">
     <div class="slides">
-      {projects.map((project, index) => (
-        <ProjectSlide
-          title={project.data.title}
-          title2={project.data.title2}
-          description={project.data.description}
-          date={project.data.date}
-          siteURL={project.data.siteURL}
-          achievements={project.data.achievements}
-          assets={project.data.assets}
-          isCurrent={index === 0} // Assuming the first project is the current one
-        />
-      ))}
+      {
+        projects.map((project, index) => (
+          <ProjectSlide
+            title={project.data.title}
+            title2={project.data.title2}
+            description={project.data.description}
+            date={project.data.date}
+            siteURL={project.data.siteURL}
+            achievements={project.data.achievements}
+            assets={project.data.assets}
+            index={index}
+            total={projects.length}
+          />
+        ))
+      }
+      <div class="slide-counter">
+        <div class="inner-container">
+          {
+            Array.from({ length: projects.length }).map((_, i) => (
+              <div class="unit" />
+            ))
+          }
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -83,13 +102,19 @@ const projects = await getCollection(ContentCollections.PORTFOLIO);
     slidesTotal: number
     positions: any
     isAnimating?: boolean
+    counters?: Element[]
 
     constructor(el: Element) {
       this.DOM = { el: el }
 
       // Initialize the Slide instances and store that in an array
       this.slides = []
+      this.counters = []
       const slideNodes = this.DOM.el?.querySelectorAll(".slide")
+      const counterNodes = this.DOM.el?.querySelectorAll(".slide-counter .unit")
+      if (counterNodes) {
+        this.counters = Array.from(counterNodes)
+      }
       if (slideNodes) {
         ;[...slideNodes].forEach((slide) => this.slides.push(new Slide(slide)))
       }
@@ -163,6 +188,13 @@ const projects = await getCollection(ContentCollections.PORTFOLIO);
             ? --this.current
             : this.slidesTotal - 1
       const nextSlide = this.slides[this.current]
+
+      // Update the counters
+      if (this.counters) {
+        this.counters.forEach((counter, index) => {
+          counter.classList.toggle("current", index === this.current)
+        })
+      }
 
       gsap
         .timeline({
@@ -265,7 +297,7 @@ const projects = await getCollection(ContentCollections.PORTFOLIO);
 
   const manager = new LifecycleManager()
 
-  manager.onElementLoaded('.projects-slider', () => {
+  manager.onElementLoaded(".projects-slider", () => {
     manager.ctx?.add(() => {
       gsap.timeline().fromTo(
         title,
@@ -273,16 +305,16 @@ const projects = await getCollection(ContentCollections.PORTFOLIO);
         {
           y: "20%",
           duration: 1,
-        ease: "power4.out",
-        scrollTrigger: {
-          trigger: title,
-          start: "top-=150% center",
-          end: "bottom-=100% center",
-          scrub: true,
-          markers: false
-        },
-      }
-    )
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: title,
+            start: "top-=150% center",
+            end: "bottom-=100% center",
+            scrub: true,
+            markers: false,
+          },
+        }
+      )
     })
   })
 
@@ -307,6 +339,18 @@ const projects = await getCollection(ContentCollections.PORTFOLIO);
       @apply pt-28 h-dvh;
       .slides {
         @apply w-screen h-dvh z-[70] relative grid grid-rows-[100%] grid-cols-[100%] min-h-[700px] items-center;
+      }
+      .slide-counter {
+        @apply absolute right-10;
+        .inner-container {
+          @apply flex flex-col items-center justify-center gap-2;
+          .unit {
+            @apply opacity-25 w-0.5 h-2 bg-orange-400 transition-all duration-1000 ease-in-out;
+            &.current {
+              @apply text-orange-300 opacity-100 h-8;
+            }
+          }
+        }
       }
     }
   }

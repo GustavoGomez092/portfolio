@@ -10,7 +10,8 @@ const {
   siteURL,
   achievements,
   assets,
-  isCurrent,
+  index,
+  total,
 } = Astro.props
 
 const mappedAssets = assets.map(
@@ -29,7 +30,7 @@ const topAssets = mappedAssets.slice(0, 2)
 const bottomAssets = mappedAssets.slice(2, 4)
 ---
 
-<div class={isCurrent ? "slide slide--current" : "slide"}>
+<div class={index === 0 ? "slide slide--current" : "slide"}>
   <div class="slide__content">
     <div class="left-side">
       <div class="overview">
