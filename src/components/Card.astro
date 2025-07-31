@@ -1,0 +1,34 @@
+---
+const { Ability, score, description } = Astro.props;
+---
+
+<div class="card p-1 mb-4 h-fit w-full bg-white rounded-xl">
+  <div class="cardheader w-full h-fit min-h-10 bg-cyan-100 rounded-t-xl">
+    <div
+      class="card-headings flex justify-between px-4 items-center w-full h-fit rounded-t-xl"
+    >
+      <h4 class="text-xs mt-2 font-semibold">Skill:</h4>
+      <i class="ri-bookmark-line text-xl"></i>
+    </div>
+    <div class="cardtitles flex justify-between p-4 w-full h-[60%]">
+      <h1 class="text-[1.63em] font-normal leading-8">
+        {Ability}
+      </h1>
+      <i class="ri-arrow-right-line mt-14 text-xl"></i>
+    </div>
+  </div>
+  <div class="cardfooter p-2 w-full h-auto flex items-center justify-between">
+    <div class="subtitle flex items-center py-2">
+      <i class="ri-arrow-down-circle-fill text-4xl"></i>
+      <h4 class="text-[0.73em] font-semibold w-full ml-2">
+        {description}
+      </h4>
+    </div>
+  </div>
+</div>
+
+<script>
+  import gsap from "gsap/all"
+  import { LifecycleManager } from "../scripts/animationLifecycle.ts"
+  import { $introComplete } from "../stores/introStore"
+</script>

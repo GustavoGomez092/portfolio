@@ -1,0 +1,214 @@
+{
+  "abilities": [
+    {
+      "id": "Fu-95",
+      "ability": "Full-Stack JS Development",
+      "description": "Developing comprehensive client-server applications using modern JavaScript technologies.",
+      "highlights": [
+        "Proficient in ES6+, TypeScript, and asynchronous patterns",
+        "Integration of frontend frameworks with backend APIs"
+      ],
+      "proficiency": 95
+    },
+    {
+      "id": "Mu-95",
+      "ability": "Multilingual Communication",
+      "description": "Working effectively in bilingual and international environments.",
+      "highlights": [
+        "Fluent in English and Spanish",
+        "Cross-cultural team collaboration"
+      ],
+      "proficiency": 95
+    },
+    {
+      "id": "Pr-85",
+      "ability": "Project Leadership & Mentorship",
+      "description": "Leading teams and mentoring junior developers to success.",
+      "highlights": [
+        "Code reviews, pairing, and documentation",
+        "Technical planning and stakeholder communication"
+      ],
+      "proficiency": 85
+    },
+    {
+      "id": "Ag-90",
+      "ability": "SCRUM & Agile Methodologies",
+      "description": "Applying Agile principles to enhance team productivity and project outcomes.",
+      "highlights": [
+        "Scrum ceremonies and Kanban boards",
+        "Continuous feedback loops and iterative development"
+      ],
+      "proficiency": 90
+    },
+    {
+      "id": "Cl-80",
+      "ability": "Cloud Services & Architecture",
+      "description": "Leveraging cloud platforms for scalable application deployment.",
+      "highlights": [
+        "AWS Lambda, S3, and DynamoDB integration",
+        "Serverless framework for rapid development"
+      ],
+      "proficiency": 80
+    },
+    {
+      "id": "Fr-90",
+      "ability": "Frontend Frameworks",
+      "description": "Creating dynamic, responsive interfaces using leading JavaScript frameworks.",
+      "highlights": [
+        "Expertise in React, Vue 3, and Angular",
+        "Component-based architecture and state management"
+      ],
+      "proficiency": 90
+    },
+    {
+      "id": "Ba-90",
+      "ability": "Backend Frameworks",
+      "description": "Building secure and scalable server-side applications.",
+      "highlights": [
+        "Experience with Node.js, Express, and NestJS",
+        "RESTful and GraphQL API development"
+      ],
+      "proficiency": 90
+    },
+    {
+      "id": "Gr-85",
+      "ability": "GraphQL APIs Development",
+      "description": "Designing flexible, performant data layers with GraphQL.",
+      "highlights": [
+        "Apollo Client/Server integration",
+        "Custom schema and resolver development"
+      ],
+      "proficiency": 85
+    },
+    {
+      "id": "RE-88",
+      "ability": "RESTful APIs Development",
+      "description": "Designing structured and secure REST APIs for scalable services.",
+      "highlights": [
+        "Route protection and authentication",
+        "Data validation and error handling"
+      ],
+      "proficiency": 88
+    },
+    {
+      "id": "UI-88",
+      "ability": "UI/UX Design Principles",
+      "description": "Delivering intuitive and visually pleasing user experiences.",
+      "highlights": [
+        "Wireframing and prototyping",
+        "User flow and interaction design"
+      ],
+      "proficiency": 88
+    },
+    {
+      "id": "UI-90",
+      "ability": "UI Animation Microinteractions",
+      "description": "Enhancing user engagement through seamless animations.",
+      "highlights": [
+        "Advanced GSAP timelines and scroll effects",
+        "Lottie integration for scalable vector animations"
+      ],
+      "proficiency": 90
+    },
+    {
+      "id": "Mo-80",
+      "ability": "Mobile App Development",
+      "description": "Building hybrid mobile apps using modern JavaScript stacks.",
+      "highlights": [
+        "Experience with React Native and Cordova",
+        "Native plugin integration and performance optimization"
+      ],
+      "proficiency": 80
+    },
+    {
+      "id": "De-80",
+      "ability": "Desktop App Development",
+      "description": "Creating lightweight desktop applications using web technologies.",
+      "highlights": [
+        "Electron-based builds with custom UI",
+        "File system access, packaging, and updates"
+      ],
+      "proficiency": 80
+    },
+    {
+      "id": "Da-85",
+      "ability": "SQL/NoSQL Databases",
+      "description": "Designing and querying relational and document databases.",
+      "highlights": [
+        "PostgreSQL schema design and indexing",
+        "MongoDB data modeling and aggregation"
+      ],
+      "proficiency": 85
+    },
+    {
+      "id": "Wo-90",
+      "ability": "WordPress Development",
+      "description": "Developing themes, plugins, and advanced features in WordPress.",
+      "highlights": [
+        "Custom PHP development with ACF and WPGraphQL",
+        "Frontend builds with Elementor and Divi"
+      ],
+      "proficiency": 90
+    },
+    {
+      "id": "De-85",
+      "ability": "Infrastructure, DevOps & CI/CD",
+      "description": "Automating deployment and infrastructure management.",
+      "highlights": [
+        "Docker containerization and orchestration",
+        "GitHub Actions and Vercel for continuous integration"
+      ],
+      "proficiency": 85
+    },
+    {
+      "id": "Gi-90",
+      "ability": "Git Version Control & GitFlow",
+      "description": "Efficient source control and team collaboration using Git.",
+      "highlights": [
+        "Branching strategies and conflict resolution",
+        "CI/CD workflow integrations"
+      ],
+      "proficiency": 90
+    },
+    {
+      "id": "Pe-85",
+      "ability": "Performance Optimization",
+      "description": "Improving app load times and runtime performance.",
+      "highlights": [
+        "Lazy loading, code splitting, and bundling",
+        "Database and API query optimization"
+      ],
+      "proficiency": 85
+    },
+    {
+      "id": "SE-80",
+      "ability": "SEO and Accessibility",
+      "description": "Developing web applications with search engines and users in mind.",
+      "highlights": [
+        "Semantic HTML and ARIA roles",
+        "Server-side rendering and meta tag management"
+      ],
+      "proficiency": 80
+    },
+    {
+      "id": "Te-80",
+      "ability": "Unit Testing & Quality Assurance",
+      "description": "Ensuring code reliability and functionality through testing.",
+      "highlights": [
+        "Unit and integration testing with Jest and Cypress",
+        "Manual testing and bug triage"
+      ],
+      "proficiency": 80
+    },
+    {
+      "id": "Bu-85",
+      "ability": "Build Tools & Modern Tooling",
+      "description": "Configuring modern development environments for performance and scalability.",
+      "highlights": [
+        "Webpack, Vite, and Babel setup",
+        "ESLint, Prettier, and Husky automation"
+      ],
+      "proficiency": 85
+    }
+  ]
+}

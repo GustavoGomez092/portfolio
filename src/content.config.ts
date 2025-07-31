@@ -1,10 +1,6 @@
-// 1. Import utilities from `astro:content`
 import { defineCollection, z } from "astro:content"
-
-// 2. Import loader(s)
 import { glob, file } from "astro/loaders"
 
-// 3. Define your collection(s)
 const Menu = defineCollection({
   loader: file("src/collections/menu.json", {
     parser: (items) => JSON.parse(items).menuItems,
@@ -45,5 +41,17 @@ const Portfolio = defineCollection({
     }),
 })
 
-// 4. Export a single `collections` object to register your collection(s)
-export const collections = { Menu, Portfolio }
+const Abilities = defineCollection({
+  loader: file("src/collections/abilities.json", {
+    parser: (items) => JSON.parse(items).abilities,
+  }),
+  schema: z.object({
+    id: z.string(),
+    ability: z.string(),
+    description: z.string(),
+    highlights: z.array(z.string()).optional(),
+    proficiency: z.number().int().min(0).max(100),
+  }),
+})
+
+export const collections = { Menu, Portfolio, Abilities }
