@@ -216,6 +216,7 @@ const smoothMouseDial = () => {
   $introComplete.subscribe((value) => {
     if (value && units.length > 0) {
       introAnimation()
+      smoothMouseDial()
     }
   })
 
