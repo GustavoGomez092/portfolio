@@ -11,7 +11,7 @@ const {
   achievements,
   assets,
   index,
-  total,
+  transparency,
 } = Astro.props
 
 const mappedAssets = assets.map(
@@ -93,7 +93,7 @@ const bottomAssets = mappedAssets.slice(2, 4)
           ) =>
             asset.src ? (
               <Image
-                class={`slide__img slide__img--${index + 1}`}
+                class={`slide__img slide__img--${index + 1} ${transparency ? "fully-visible" : ""}`}
                 src={asset.src}
                 alt={asset.alt}
               />
@@ -105,7 +105,7 @@ const bottomAssets = mappedAssets.slice(2, 4)
                   loop
                   muted
                   playsinline
-                  class={`slide__img slide__img--${index + 1}`}
+                  class={`slide__img slide__img--${index + 1} ${transparency ? "fully-visible" : ""}`}
                 >
                   <source src={asset.videoSrc} />
                 </video>
@@ -124,7 +124,7 @@ const bottomAssets = mappedAssets.slice(2, 4)
           ) =>
             asset.src ? (
               <Image
-                class={`slide__img slide__img--${index + 3}`}
+                class={`slide__img slide__img--${index + 3} ${transparency ? "fully-visible" : ""}`}
                 src={asset.src}
                 alt={asset.alt}
               />
@@ -136,7 +136,7 @@ const bottomAssets = mappedAssets.slice(2, 4)
                   loop
                   muted
                   playsinline
-                  class={`slide__img slide__img--${index + 3}`}
+                  class={`slide__img slide__img--${index + 3} ${transparency ? "fully-visible" : ""}`}
                 >
                   <source src={asset.videoSrc} />
                 </video>
@@ -201,6 +201,9 @@ const bottomAssets = mappedAssets.slice(2, 4)
       @apply flex flex-wrap items-center justify-center self-center content-center min-w-[790px] w-full h-[calc(100%-6rem)] rotate-[-22.5deg] origin-center;
       .slide__img {
         @apply opacity-40 flex-none block bg-cover bg-center h-[calc(50%-1.5rem)] object-cover;
+        &.fully-visible {
+          @apply !opacity-80;
+        }
 
         &.slide__img--1,
         &.slide__img--4 {

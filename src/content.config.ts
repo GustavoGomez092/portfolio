@@ -38,6 +38,7 @@ const Portfolio = defineCollection({
           })
         )
         .optional(),
+      transparency: z.boolean().optional(),
     }),
 })
 
