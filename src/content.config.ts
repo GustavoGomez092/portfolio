@@ -9,6 +9,7 @@ const Menu = defineCollection({
     id: z.string(),
     title: z.string(),
     url: z.string(),
+    offset: z.number().min(0).optional(),
   }),
 })
 const Portfolio = defineCollection({

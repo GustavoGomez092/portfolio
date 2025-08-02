@@ -3,12 +3,14 @@
     {
       "id": "about",
       "title": "About",
-      "url": "#about"
+      "url": "#about-section",
+      "offset": 100
     },
     {
       "id": "projects",
       "title": "Projects",
-      "url": "#projects"
+      "url": "#projects-section",
+      "offset": 320
     },
     {
       "id": "contact",

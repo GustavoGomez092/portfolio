@@ -16,7 +16,7 @@ const projects = unsortedProjects.sort((a, b) => {
 })
 ---
 
-<section class="projects-slider invert-area">
+<section id="projects-section" class="projects-slider invert-area">
   <div class="title-container">
     <h2 class="projects-slider-title">Projects</h2>
   </div>
@@ -64,16 +64,6 @@ const projects = unsortedProjects.sort((a, b) => {
     charsClass: "char",
   })
 
-  interface SlideshowDOM {
-    el: Element | null | undefined
-    navigation?: {
-      prev: Element | null | undefined
-      next: Element | null | undefined
-    }
-  }
-
-  type Direction = "next" | "prev"
-
   // Define the Slide class to represent each slide
   class Slide {
     DOM: {
@@ -95,6 +85,16 @@ const projects = unsortedProjects.sort((a, b) => {
     }
   }
 
+  interface SlideshowDOM {
+    el: Element | null | undefined
+    navigation?: {
+      prev: Element | null | undefined
+      next: Element | null | undefined
+    }
+  }
+
+  type Direction = "next" | "prev"
+
   class Slideshow {
     DOM: SlideshowDOM
     slides: any[]
@@ -103,6 +103,8 @@ const projects = unsortedProjects.sort((a, b) => {
     positions: any
     isAnimating?: boolean
     counters?: Element[]
+    targetSlide?: number // Track the target slide we want to reach
+    currentTimeline?: gsap.core.Timeline
 
     constructor(el: Element) {
       this.DOM = { el: el }
@@ -124,7 +126,6 @@ const projects = unsortedProjects.sort((a, b) => {
       // Total slides
       this.slidesTotal = this.slides.length
       // positions (in percentages) for the images movement for both directions
-      // example: the second image (top right one) will translate in the y-axis -150% when clicking the next button but when clicking the prev button it will instead translate in the x-axis 150%
       this.positions = {
         x: {
           next: [-150, 0, 0, 150],
@@ -137,6 +138,7 @@ const projects = unsortedProjects.sort((a, b) => {
       }
       this.initEvents()
     }
+
     initEvents() {
       const mainContainer = document.querySelector(".projects-slider")
       const innerContainer = document.querySelector(
@@ -151,10 +153,11 @@ const projects = unsortedProjects.sort((a, b) => {
 
       // Initialize the scrollTrigger
       const that = this
+
       ScrollTrigger.create({
         trigger: innerContainer,
         endTrigger: mainContainer,
-        start: "top top-=10%",
+        start: "top top-=12%",
         end: "bottom bottom",
         pin: true,
         onUpdate: function (self) {
@@ -166,28 +169,36 @@ const projects = unsortedProjects.sort((a, b) => {
             newSlide >= 0 &&
             newSlide < that.slidesTotal
           ) {
-            that.navigate(newSlide > that.current ? "next" : "prev")
+            const direction = newSlide > that.current ? "next" : "prev"
+            that.navigateToSlide(newSlide, direction)
           }
         },
         markers: false,
         pinSpacing: false,
       })
-    }
-    navigate(direction: Direction) {
-      // if (this.isAnimating) {
-      //   return false
-      // }
 
+    }
+
+    navigateToSlide(slideIndex: number, direction: Direction) {
+      // If we're already animating, update the target slide
+      if (this.isAnimating) {
+        this.targetSlide = slideIndex
+        return
+      }
+
+      // Start navigation to the target slide
+      this.performNavigation(slideIndex, direction)
+    }
+
+    performNavigation(slideIndex: number, direction: Direction) {
       const currentSlide = this.slides[this.current]
-      this.current =
-        direction === "next"
-          ? this.current < this.slidesTotal - 1
-            ? ++this.current
-            : 0
-          : this.current > 0
-            ? --this.current
-            : this.slidesTotal - 1
-      const nextSlide = this.slides[this.current]
+      const nextSlide = this.slides[slideIndex]
+
+      // Update current index
+      this.current = slideIndex
+
+      // Clear any pending target since we're handling it now
+      this.targetSlide = undefined
 
       // Update the counters
       if (this.counters) {
@@ -196,16 +207,27 @@ const projects = unsortedProjects.sort((a, b) => {
         })
       }
 
-      gsap
+      this.currentTimeline = gsap
         .timeline({
           defaults: { duration: 0.8, ease: "power4.inOut" },
           onStart: () => {
-            // this.isAnimating = true
+            this.isAnimating = true
           },
           onComplete: () => {
-            // Remove "current" class
+            // Remove "current" class from previous slide
             currentSlide.DOM.el.classList.remove("slide--current")
-            // this.isAnimating = false
+            this.isAnimating = false
+
+            // Check if there's a pending target slide to navigate to
+            if (
+              this.targetSlide !== undefined &&
+              this.targetSlide !== this.current
+            ) {
+              const pendingDirection =
+                this.targetSlide > this.current ? "next" : "prev"
+              const pendingTarget = this.targetSlide
+              this.performNavigation(pendingTarget, pendingDirection)
+            }
           },
         })
         .addLabel("start", 0)
@@ -287,6 +309,7 @@ const projects = unsortedProjects.sort((a, b) => {
           "upcoming"
         )
     }
+
     reverseDirection(direction: Direction) {
       return direction === "next" ? "prev" : "next"
     }
@@ -328,6 +351,9 @@ const projects = unsortedProjects.sort((a, b) => {
   @reference "../styles/global.css";
   .projects-slider {
     @apply bg-black overflow-hidden;
+    @variant lg {
+      overflow: unset;
+    }
     box-shadow: 0px 0px 0px 1px #000;
     .title-container {
       @apply w-full max-w-[1440px] mx-auto overflow-hidden p-6;

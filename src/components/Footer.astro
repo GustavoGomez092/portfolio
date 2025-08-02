@@ -1,0 +1,149 @@
+<footer id="site-footer" class="footer">
+  <div class="inner-container">
+    <div class="top-section">
+      <div class="left">
+        <h2 class="footer-heading">Ready to Roll?</h2>
+        <p class="footer-text">Let's Rock!</p>
+      </div>
+      <div class="right">
+        <div class="rocker"></div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  import gsap from "gsap"
+  import Lottie from "lottie-web"
+  import { LifecycleManager } from "../scripts/animationLifecycle.ts"
+  import { ScrollTrigger } from "gsap/all"
+  import { SplitText } from "gsap/SplitText"
+  import { CustomEase } from "gsap/CustomEase";
+  import { CustomWiggle } from "gsap/CustomWiggle";
+  import RockerAnim from "../assets/lottie/Rock-On.json"
+
+  gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase, CustomWiggle)
+
+  CustomWiggle.create("funWiggle", {wiggles: 10, type: "anticipate"});
+
+  const manager = new LifecycleManager()
+  let lottieRocker: any = null
+
+  manager.onElementLoaded("#site-footer", () => {
+    const splitTitle = new SplitText(".footer-heading", {
+      type: "lines, words",
+    })
+    const splitText = new SplitText(".footer-text", {
+      type: "lines, words",
+    })
+
+    const rocker = document.querySelector(".rocker")
+    if (rocker) {
+      lottieRocker = Lottie.loadAnimation({
+        container: rocker,
+        renderer: "svg",
+        loop: true,
+        autoplay: true,
+        animationData: RockerAnim,
+      })
+    }
+
+
+    manager.ctx?.add(() => {
+      gsap.timeline().to("#site-footer", {
+        backgroundColor: "white",
+        scrollTrigger: {
+          trigger: "#site-footer",
+          start: "center center",
+          end: "bottom bottom",
+          scrub: true,
+        },
+      })
+
+      gsap.timeline().from(splitTitle.words, {
+        y: "100%",
+        opacity: 0,
+        duration: 0.5,
+        ease: "power1.out",
+        scrollTrigger: {
+          scrub: true,
+          trigger: "#site-footer .footer-heading",
+          start: "top center+=10%",
+          end: "bottom center+=10%",
+        },
+      })
+
+      gsap.timeline().from(splitText.words, {
+        y: "100%",
+        opacity: 0,
+        duration: 0.5,
+        ease: "power1.out",
+        scrollTrigger: {
+          scrub: true,
+          trigger: "#site-footer .footer-text",
+          start: "top center+=10%",
+          end: "bottom center+=10%",
+        },
+        onComplete: () => {
+          gsap.timeline().to("#site-footer .footer-text", {
+            scale: 1.2,
+            ease: "funWiggle",
+            onComplete: () => {
+              gsap.fromTo("#site-footer .rocker", {
+                opacity: 0,
+              }, {
+                opacity: 1,
+                scrollTrigger: {
+                  scrub: true,
+                  trigger: "#site-footer .footer-text",
+                  start: "top center+=10%",
+                  end: "bottom center+=10%",
+                },
+                onComplete: () => {
+                  gsap.fromTo("#site-footer .rocker", {
+                    scale: 1,
+                  },{
+                    scale: 1.15,
+                    ease: "funWiggle",
+                    repeat: -1,
+                  })
+                }
+              })
+            }
+          })
+        },
+      })
+    })
+  })
+</script>
+
+<style>
+  @reference '../styles/global.css';
+  #site-footer {
+    @apply h-[150vh] bg-black;
+    .inner-container {
+      @apply mx-auto max-w-site px-6 xl:px-0;
+      .top-section {
+        @apply h-[60vh]  lg:h-[65vh] flex flex-col lg:flex-row items-center justify-center;
+        .left {
+          @apply w-full lg:w-8/12;
+          .footer-heading, .footer-text {
+            @apply text-[50px] lg:text-[128px] font-bold mb-8 text-white leading-[40px] lg:leading-[120px];
+          }
+          .footer-text {
+            @apply text-orange-400 text-[50px] lg:text-[128px] font-bold mb-4 leading-[40px] lg:leading-[120px];
+          }
+        }
+        .right {
+          @apply w-full lg:w-4/12;
+          .rocker {
+            @apply opacity-0;
+            svg {
+              @apply scale-110;
+            }
+          }
+        }
+      }
+    }
+  }
+</style>

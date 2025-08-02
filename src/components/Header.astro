@@ -1,17 +1,17 @@
 ---
 import { Image } from "astro:assets"
-import { ContentCollections } from "../collections/types";
-import { getCollection } from 'astro:content';
+import { ContentCollections } from "../collections/types"
+import { getCollection } from "astro:content"
 import Logo from "../assets/img/logo.svg"
 
-const menu = await getCollection(ContentCollections.MENU);
+const menu = await getCollection(ContentCollections.MENU)
 ---
 
 <nav>
   <div class="logo-area">
-    <a href="#home" class="logo hoverable">
+    <div class="logo hoverable">
       <Image src={Logo} width={50} height={50} alt="Logo" loading="eager" />
-    </a>
+    </div>
   </div>
   <div class="menu">
     <ul class="menu-list">
@@ -19,7 +19,7 @@ const menu = await getCollection(ContentCollections.MENU);
         menu.map((item) => {
           return (
             <li class="menu-item hoverable">
-              <a href={item.data.url}>{item.data.title}</a>
+              <a href={item.data.url}  data-offset={item.data.offset}>{item.data.title}</a>
             </li>
           )
         })
@@ -33,6 +33,7 @@ const menu = await getCollection(ContentCollections.MENU);
 
 <script>
   import gsap from "gsap"
+  import { ScrollTrigger } from "gsap/all"
   import { LifecycleManager } from "../scripts/animationLifecycle.ts"
   import { $smoothScroll } from "../stores/smoothScrollStore"
   import { $introComplete } from "../stores/introStore"
@@ -56,16 +57,35 @@ const menu = await getCollection(ContentCollections.MENU);
   import g18 from "../assets/img/g/18.png"
   import g19 from "../assets/img/g/19.png"
 
+  gsap.registerPlugin(ScrollTrigger)
   const manager = new LifecycleManager()
 
   // change image on logo hover every 0.5s on hover
   const logoDresser = () => {
-    const logo: HTMLImageElement | null = document.querySelector("nav .logo-area > a > img")
+    const logo: HTMLImageElement | null = document.querySelector(
+      "nav div.logo-area > div.logo > img"
+    )
     if (!logo) return
     const images = [
-      g1, g2, g3, g4, g5, g6, g7, g8, g9, g10,
-      g11, g12, g13, g14, g15, g16, g17, g18,
-      g19
+      g1,
+      g2,
+      g3,
+      g4,
+      g5,
+      g6,
+      g7,
+      g8,
+      g9,
+      g10,
+      g11,
+      g12,
+      g13,
+      g14,
+      g15,
+      g16,
+      g17,
+      g18,
+      g19,
     ]
     let index = 0
 
@@ -75,22 +95,19 @@ const menu = await getCollection(ContentCollections.MENU);
         logo.src = images[index].src
       }
     })
-
   }
 
-  const animateHeader = (header:HTMLElement) => {
+  const animateHeader = (header: HTMLElement) => {
     manager.ctx?.add(() => {
-      gsap
-        .timeline()
-        .to(header, {
-          duration: 1,
-          opacity: 1,
-          delay: 0,
-          ease: "power2.inOut",
-          onComplete: () => {
-            $smoothScroll.value.paused(false)
-          },
-        })
+      gsap.timeline().to(header, {
+        duration: 1,
+        opacity: 1,
+        delay: 0,
+        ease: "power2.inOut",
+        onComplete: () => {
+          $smoothScroll.value.paused(false)
+        },
+      })
     })
   }
 
@@ -101,7 +118,7 @@ const menu = await getCollection(ContentCollections.MENU);
     // gsap.set(header, { opacity: 0 })
     $smoothScroll.value.paused(true)
     $introComplete.listen(() => {
-    if ($introComplete.get()) {
+      if ($introComplete.get()) {
         animateHeader(header)
       } else {
         return
@@ -112,6 +129,33 @@ const menu = await getCollection(ContentCollections.MENU);
     } else {
       return
     }
+document.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", (e) => {
+    if(!link.getAttribute("href")?.startsWith("#")) return
+    e.preventDefault()
+    const href = link.getAttribute("href")
+    if (href && href.startsWith("#")) {
+      const target = document.querySelector(href)
+      const offset = parseInt(link.getAttribute("data-offset") || "0", 10) || 0
+      if (target) {
+        const smoother = $smoothScroll.value
+        const targetY = (target as HTMLElement).offsetTop + offset
+
+        gsap.to(smoother, {
+          scrollTop: targetY,
+          duration: 2,
+          ease: "power2.inOut",
+          onStart: () => {
+            ScrollTrigger.update() // Update ScrollTrigger before the scroll
+          },
+          onComplete: () => {
+            ScrollTrigger.update() // Update ScrollTrigger after the scroll
+          },
+        })
+      }
+    }
+  })
+})
   })
 </script>
 

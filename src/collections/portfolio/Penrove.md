@@ -1,7 +1,7 @@
 ---
 title: Penrove
 title2: ""
-description: The digital engineering platform that keeps your team, design, and safety goals aligned. This Full-stack project helps organizations working on the world’s most complex, safety-critical systems move faster and with more confidence, from defense and aerospace to advanced manufacturing and mobility.
+description: Full-stack project that helps organizations working on the world’s most complex, safety-critical systems move faster and with more confidence, from defense and aerospace to advanced manufacturing and mobility.
 date: May 2025
 assets:
   [
@@ -27,6 +27,9 @@ achievements:
     { achievement: "GraphQL API with Nest.js" },
     { achievement: "Cloud infrastructure in AWS" },
     { achievement: "Fine-grained Auth system" },
-    { achievement: "Custom Reports Generation" },
+    {
+      achievement: "NVidia Inception program",
+      URL: "https://www.nvidia.com/en-us/startups/",
+    },
   ]
 ---
