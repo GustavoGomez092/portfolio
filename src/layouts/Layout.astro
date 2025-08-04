@@ -49,7 +49,14 @@ initSmoothScrolling()
 </script>
 
 <style>
+  @reference "../styles/global.css";
   body {
     overflow-x: hidden;
+    #smooth-wrapper {
+      @apply overflow-hidden;
+      #smooth-content {
+        @apply overflow-hidden;
+      }
+    }
   }
 </style>
