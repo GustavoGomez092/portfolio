@@ -19,7 +19,13 @@ const menu = await getCollection(ContentCollections.MENU)
         menu.map((item) => {
           return (
             <li class="menu-item hoverable">
-              <a href={item.data.url}  data-offset={item.data.offset}>{item.data.title}</a>
+              <a
+                href={item.data.url}
+                data-offset={item.data.offset}
+                data-duration={item.data.duration}
+              >
+                {item.data.title}
+              </a>
             </li>
           )
         })
@@ -27,7 +33,7 @@ const menu = await getCollection(ContentCollections.MENU)
     </ul>
   </div>
   <div class="call-to-action">
-    <a href="" class="btn hoverable">Download Resume</a>
+    <a href="/portfolio/assets/pdf/Gustavo Gomez - Resume 2025.pdf" class="btn hoverable" download>Download Resume</a>
   </div>
 </nav>
 
@@ -105,7 +111,7 @@ const menu = await getCollection(ContentCollections.MENU)
         delay: 0,
         ease: "power2.inOut",
         onComplete: () => {
-          $smoothScroll.value.paused(false)
+          $smoothScroll.value.start()
         },
       })
     })
@@ -116,7 +122,7 @@ const menu = await getCollection(ContentCollections.MENU)
     const header = document.querySelector("nav")
     if (!header) return
     // gsap.set(header, { opacity: 0 })
-    $smoothScroll.value.paused(true)
+    $smoothScroll.value.stop()
     $introComplete.listen(() => {
       if ($introComplete.get()) {
         animateHeader(header)
@@ -129,33 +135,34 @@ const menu = await getCollection(ContentCollections.MENU)
     } else {
       return
     }
-document.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", (e) => {
-    if(!link.getAttribute("href")?.startsWith("#")) return
-    e.preventDefault()
-    const href = link.getAttribute("href")
-    if (href && href.startsWith("#")) {
-      const target = document.querySelector(href)
-      const offset = parseInt(link.getAttribute("data-offset") || "0", 10) || 0
-      if (target) {
-        const smoother = $smoothScroll.value
-        const targetY = (target as HTMLElement).offsetTop + offset
-
-        gsap.to(smoother, {
-          scrollTop: targetY,
-          duration: 2,
-          ease: "power2.inOut",
-          onStart: () => {
-            ScrollTrigger.update() // Update ScrollTrigger before the scroll
-          },
-          onComplete: () => {
-            ScrollTrigger.update() // Update ScrollTrigger after the scroll
-          },
-        })
-      }
-    }
   })
-})
+
+  manager.onElementLoaded("#site-footer", () => {
+    document.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", (e) => {
+        if (!link.getAttribute("href")?.startsWith("#")) return
+        e.preventDefault()
+        const href = link.getAttribute("href")
+        if (href && href.startsWith("#")) {
+          const target = document.querySelector(href)
+          const offset =
+            parseInt(link.getAttribute("data-offset") || "0", 10) || 0
+          const duration =
+            parseInt(link.getAttribute("data-duration") || "500", 10) || 500
+          if (target) {
+            const smoother = $smoothScroll.value
+
+            smoother.scrollTo(target, {
+              duration: duration / 1000,
+              offset: offset,
+              easing: "easeInOut",
+              lock: true,
+              immediate: false,
+            })
+          }
+        }
+      })
+    })
   })
 </script>
 

@@ -4,18 +4,22 @@
       "id": "about",
       "title": "About",
       "url": "#about-section",
-      "offset": 100
+      "offset": 100,
+      "duration": 2500
     },
     {
       "id": "projects",
       "title": "Projects",
       "url": "#projects-section",
-      "offset": 320
+      "offset": 320,
+      "duration": 3500
     },
     {
       "id": "contact",
       "title": "Contact",
-      "url": "#contact"
+      "url": "#site-footer",
+      "offset": 1000,
+      "duration": 6000
     }
   ]
 }

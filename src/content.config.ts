@@ -10,6 +10,7 @@ const Menu = defineCollection({
     title: z.string(),
     url: z.string(),
     offset: z.number().min(0).optional(),
+    duration: z.number().min(0).optional(),
   }),
 })
 const Portfolio = defineCollection({

@@ -1,12 +1,64 @@
+---
+import { Image } from "astro:assets";
+import github from "../assets/img/github.svg"
+import linkedin from "../assets/img/linkedin.svg"
+import envelope from "../assets/img/envelope.svg"
+---
 <footer id="site-footer" class="footer">
+  <div class="absolute inset-0">
+    <div class="dot-network opacity-0 absolute inset-0 z-0 h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
+  </div>
   <div class="inner-container">
-    <div class="top-section">
+    <div class="top-section invert-area">
       <div class="left">
         <h2 class="footer-heading">Ready to Roll?</h2>
         <p class="footer-text">Let's Rock!</p>
       </div>
       <div class="right">
         <div class="rocker"></div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-section">
+    <div class="top-area">
+      <h3 class="cta">Feel free to contact me through these channels:</h3>
+      <div class="contact-buttons">
+        <a class="hoverable" href="mailto:gustavogomez092@gmail.com">
+          <Image
+            width={22}
+            height={22}
+            src={envelope}
+            alt="Email"
+          />
+          Email
+        </a>
+        <a class="hoverable" href="https://github.com/gustavogomez092" target="_blank">
+                      <Image
+              width={22}
+              height={22}
+              src={github}
+              alt="GitHub"
+            />
+          GitHub
+        </a>
+        <a class="hoverable" href="https://www.linkedin.com/in/gustavo-gomez-selva-7000621b7" target="_blank">
+          <Image
+            width={22}
+            height={22}
+            src={linkedin}
+            alt="LinkedIn"
+          />
+          LinkedIn
+        </a>
+      </div>
+    </div>
+    <div class="bottom-area">
+      <div class="full-width">
+        <p class="name">GUSTAVOGOMEZ</p>
+      </div>
+      <div class="tag-line">
+        <p class="tag-line-text">©2025 Gustavo Gomez. All rights reserved.</p>
+        <p class="tag-line-text">Built with Astro and Tailwind CSS</p>
       </div>
     </div>
   </div>
@@ -18,13 +70,13 @@
   import { LifecycleManager } from "../scripts/animationLifecycle.ts"
   import { ScrollTrigger } from "gsap/all"
   import { SplitText } from "gsap/SplitText"
-  import { CustomEase } from "gsap/CustomEase";
-  import { CustomWiggle } from "gsap/CustomWiggle";
+  import { CustomEase } from "gsap/CustomEase"
+  import { CustomWiggle } from "gsap/CustomWiggle"
   import RockerAnim from "../assets/lottie/Rock-On.json"
 
   gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase, CustomWiggle)
 
-  CustomWiggle.create("funWiggle", {wiggles: 10, type: "anticipate"});
+  CustomWiggle.create("funWiggle", { wiggles: 10, type: "anticipate" })
 
   const manager = new LifecycleManager()
   let lottieRocker: any = null
@@ -36,8 +88,12 @@
     const splitText = new SplitText(".footer-text", {
       type: "lines, words",
     })
+    const splitName = new SplitText(".full-width .name", {
+      type: "lines, words, chars",
+    })
 
     const rocker = document.querySelector(".rocker")
+
     if (rocker) {
       lottieRocker = Lottie.loadAnimation({
         container: rocker,
@@ -48,10 +104,19 @@
       })
     }
 
-
     manager.ctx?.add(() => {
       gsap.timeline().to("#site-footer", {
         backgroundColor: "white",
+        scrollTrigger: {
+          trigger: "#site-footer",
+          start: "center center",
+          end: "bottom bottom",
+          scrub: true,
+        },
+      })
+
+      gsap.timeline().to("#site-footer .dot-network", {
+        opacity: 1,
         scrollTrigger: {
           trigger: "#site-footer",
           start: "center center",
@@ -73,6 +138,22 @@
         },
       })
 
+      gsap.timeline().fromTo(splitName.chars, {
+        y: "100%",
+        },
+        {
+          y: "0%",
+          ease: "power1.out",
+          scrollTrigger: {
+            scrub: true,
+            trigger: "#site-footer",
+            start: "center center",
+            end: "center+=15% center",
+            markers: false,
+          },
+          stagger: 0.05,
+      })
+
       gsap.timeline().from(splitText.words, {
         y: "100%",
         opacity: 0,
@@ -89,27 +170,35 @@
             scale: 1.2,
             ease: "funWiggle",
             onComplete: () => {
-              gsap.fromTo("#site-footer .rocker", {
-                opacity: 0,
-              }, {
-                opacity: 1,
-                scrollTrigger: {
-                  scrub: true,
-                  trigger: "#site-footer .footer-text",
-                  start: "top center+=10%",
-                  end: "bottom center+=10%",
+              gsap.fromTo(
+                "#site-footer .rocker",
+                {
+                  opacity: 0,
                 },
-                onComplete: () => {
-                  gsap.fromTo("#site-footer .rocker", {
-                    scale: 1,
-                  },{
-                    scale: 1.15,
-                    ease: "funWiggle",
-                    repeat: -1,
-                  })
+                {
+                  opacity: 1,
+                  scrollTrigger: {
+                    scrub: true,
+                    trigger: "#site-footer .footer-text",
+                    start: "top center+=10%",
+                    end: "bottom center+=10%",
+                  },
+                  onComplete: () => {
+                    gsap.fromTo(
+                      "#site-footer .rocker",
+                      {
+                        scale: 1,
+                      },
+                      {
+                        scale: 1.15,
+                        ease: "funWiggle",
+                        repeat: -1,
+                      }
+                    )
+                  },
                 }
-              })
-            }
+              )
+            },
           })
         },
       })
@@ -120,14 +209,19 @@
 <style>
   @reference '../styles/global.css';
   #site-footer {
-    @apply h-[150vh] bg-black;
+    @apply h-[150vh] bg-black relative z-1;
     .inner-container {
-      @apply mx-auto max-w-site px-6 xl:px-0;
+      @apply mx-auto max-w-site px-6 xl:px-0 pt-20 lg:pt-0;
+      box-shadow: 1px -1px 0px 1px #000;
+      @variant lg {
+        box-shadow: none;
+      }
       .top-section {
         @apply h-[60vh]  lg:h-[65vh] flex flex-col lg:flex-row items-center justify-center;
         .left {
           @apply w-full lg:w-8/12;
-          .footer-heading, .footer-text {
+          .footer-heading,
+          .footer-text {
             @apply text-[50px] lg:text-[128px] font-bold mb-8 text-white leading-[40px] lg:leading-[120px];
           }
           .footer-text {
@@ -137,11 +231,48 @@
         .right {
           @apply w-full lg:w-4/12;
           .rocker {
-            @apply opacity-0;
+            @apply opacity-0 overflow-hidden;
             svg {
               @apply scale-110;
             }
           }
+        }
+      }
+    }
+    .bottom-section {
+      @apply h-[90vh] lg:h-[85vh] flex flex-col justify-between items-center w-full max-w-screen overflow-hidden;
+      .top-area {
+        @apply w-full max-w-site mx-auto px-4 xl:px-0 flex flex-col items-center justify-center relative z-10 overflow-hidden;
+        .cta {
+          @apply text-4xl lg:text-4xl font-medium text-center;
+        }
+        .contact-buttons {
+          @apply flex flex-col lg:flex-row justify-center items-center gap-4 mt-6;
+          a {
+            @apply flex flex-row gap-x-4 px-6 py-2 bg-transparent text-black rounded-full border-black border;
+            @apply hover:text-white hover:border-orange-600 hover:bg-orange-600 transition-colors duration-500 ease-in-out;
+            img {
+              @apply transition-[filter] duration-500 ease-in-out;
+            }
+            &:hover {
+              @apply bg-orange-600;
+              img {
+                @apply filter invert;
+              }
+            }
+          }
+        }
+      }
+      .bottom-area {
+        @apply  relative z-10;
+        .full-width {
+          @apply relative w-screen;
+          .name {
+            @apply font-medium text-[11.5vw] uppercase px-0 lg:px-6 text-center overflow-hidden scale-y-125 h-fit;
+          }
+        }
+        .tag-line {
+          @apply flex flex-col lg:flex-row text-center justify-between w-full max-w-screen px-6 lg:px-10 pb-3 text-lg;
         }
       }
     }
