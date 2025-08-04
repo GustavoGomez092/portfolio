@@ -10,7 +10,7 @@ assets:
     { src: "../assets/img/Chiapet/Mobile.png", alt: "Chiapet mobile" },
     { src: "../assets/img/Chiapet/Cat.png", alt: "Chiapet mascot" },
   ]
-siteURL: https://www.capstantx.com/
+siteURL: https://chia.com/
 achievements:
   [
     { achievement: "Micro interactions developer" },

@@ -2,7 +2,7 @@
   "abilities": [
     {
       "id": "Fu-95",
-      "ability": "Full-Stack JS Development",
+      "ability": "Full-Stack JS & TS Development",
       "description": "Developing comprehensive client-server applications using modern JavaScript technologies.",
       "highlights": [
         "Proficient in ES6+, TypeScript, and asynchronous patterns",

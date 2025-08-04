@@ -1,7 +1,7 @@
 ---
 title: Ore.design
 title2: ""
-description: Full-stack project for a Landscape design and technology firm, Built in a "front-the-groud-up" theme to satisfy the tialored requirements of the client, Leveraging smooth animations with GSAP and Vue.js as the front-end framework.
+description: Full-stack project for a Landscape design and technology firm, built in a "front-the-groud-up" theme to satisfy the tialored requirements of the client, leveraging smooth animations with GSAP and Vue.js as the front-end framework.
 date: June 2022
 assets:
   [

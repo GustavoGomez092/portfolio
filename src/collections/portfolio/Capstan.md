@@ -1,7 +1,7 @@
 ---
 title: Capstan
 title2: Therapeutics
-description: Full-stack project for a biotechnology company. With a strong foucs on design and animations this site leverages 2D and 3D animations for a unique user experience
+description: Full-stack project for a biotechnology company. With a strong focus on design and animations this site leverages 2D and 3D animations for a unique user experience
 date: January 2025
 assets:
   [
