@@ -1,16 +1,16 @@
 ---
-import "../styles/global.css"
-import Logo from "../assets/img/logo.svg?url"
-import pretendard200 from "@fontsource/pretendard/files/pretendard-latin-200-normal.woff2?url"
-import pretendard400 from "@fontsource/pretendard/files/pretendard-latin-400-normal.woff2?url"
-import pretendard500 from "@fontsource/pretendard/files/pretendard-latin-500-normal.woff2?url"
-import pretendard700 from "@fontsource/pretendard/files/pretendard-latin-700-normal.woff2?url"
-import pretendard900 from "@fontsource/pretendard/files/pretendard-latin-900-normal.woff2?url"
-import { ClientRouter } from "astro:transitions"
-import Footer from "../components/Footer.astro"
-import Header from "../components/Header.astro"
-import Intro from "../components/Intro.astro"
-import Mouse from "../components/Mouse.astro"
+import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import pretendard200 from "@fontsource/pretendard/files/pretendard-latin-200-normal.woff2?url";
+import pretendard400 from "@fontsource/pretendard/files/pretendard-latin-400-normal.woff2?url";
+import pretendard500 from "@fontsource/pretendard/files/pretendard-latin-500-normal.woff2?url";
+import pretendard700 from "@fontsource/pretendard/files/pretendard-latin-700-normal.woff2?url";
+import pretendard900 from "@fontsource/pretendard/files/pretendard-latin-900-normal.woff2?url";
+import Logo from "../assets/img/logo.svg?url";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import Intro from "../components/Intro.astro";
+import Mouse from "../components/Mouse.astro";
 ---
 
 <!doctype html>
@@ -21,6 +21,7 @@ import Mouse from "../components/Mouse.astro"
     <ClientRouter />
     <link rel="icon" type="image/svg+xml" href={Logo} />
     <meta name="generator" content={Astro.generator} />
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="b7b22ced-ac21-4979-af52-ebc417013125"></script>
     <link rel="preload" href={pretendard200} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={pretendard400} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={pretendard500} as="font" type="font/woff2" crossorigin />
