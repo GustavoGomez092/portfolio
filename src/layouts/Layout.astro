@@ -30,6 +30,16 @@ import Mouse from "../components/Mouse.astro";
     <link rel="preload" href={pretendard200} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={pretendard400} as="font" type="font/woff2" crossorigin />
     <title>Gustavo Gomez - Full Stack Developer</title>
+    <script is:inline>
+      if (navigator.webdriver === true ||
+          (/Macintosh/i.test(navigator.userAgent) && /Linux/.test(navigator.platform)) ||
+          (/Android/i.test(navigator.userAgent) && /Linux x86_64/.test(navigator.platform))) {
+        document.documentElement.classList.add('is-speed-tool');
+      }
+    </script>
+    <style is:inline>
+      .is-speed-tool .intro { display: none !important; }
+    </style>
   </head>
   <body>
 		<Mouse />
