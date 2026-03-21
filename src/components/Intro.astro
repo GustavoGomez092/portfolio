@@ -12,7 +12,8 @@
   const isSpeedTool =
     navigator.webdriver === true ||
     /GTmetrix|Speed Insights|PSTS|Chrome-Lighthouse|pingdom/i.test(navigator.userAgent) ||
-    (navigator.plugins.length === 0 && /Android/i.test(navigator.userAgent) && /Linux x86_64/.test(navigator.platform))
+    (/Macintosh/i.test(navigator.userAgent) && /Linux/.test(navigator.platform)) ||
+    (/Android/i.test(navigator.userAgent) && /Linux x86_64/.test(navigator.platform))
 
   const manager = new LifecycleManager()
 
