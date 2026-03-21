@@ -10,7 +10,11 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://gustavogomez092.github.io',
   base: 'portfolio',
-  integrations: [partytown(), sitemap()],
+  integrations: [partytown({
+    config: {
+      forward: ['umami.track'],
+    },
+  }), sitemap()],
   vite: {
     plugins: [tailwindcss()],
   },

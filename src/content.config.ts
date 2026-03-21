@@ -1,4 +1,5 @@
-import { defineCollection, z } from "astro:content"
+import { defineCollection } from "astro:content"
+import { z } from "astro/zod"
 import { glob, file } from "astro/loaders"
 
 const Menu = defineCollection({
@@ -31,7 +32,7 @@ const Portfolio = defineCollection({
         )
         .min(4)
         .max(6),
-      siteURL: z.string().url().optional(),
+      siteURL: z.url().optional(),
       achievements: z
         .array(
           z.object({

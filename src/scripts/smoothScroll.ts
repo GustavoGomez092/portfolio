@@ -1,6 +1,6 @@
 import { gsap } from "gsap"
 import Lenis from "lenis"
-import { ScrollTrigger } from "gsap/all"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { setSmoothscroll } from "../stores/smoothScrollStore"
 
 // Initializes smooth scrolling with Lenis.

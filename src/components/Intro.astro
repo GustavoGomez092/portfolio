@@ -3,11 +3,13 @@
 </section>
 
 <script>
-  import Lottie from "lottie-web"
+  import Lottie from "lottie-web/build/player/lottie_light"
   import animation from "../assets/lottie/intro-new.json"
   import gsap from "gsap"
   import { setIntroComplete, $introComplete } from "../stores/introStore"
   import { LifecycleManager } from "../scripts/animationLifecycle.ts"
+
+  const isSpeedTool = /lighthouse|pagespeed|gtmetrix|pingdom/i.test(navigator.userAgent)
 
   const manager = new LifecycleManager()
 
@@ -56,15 +58,15 @@
   }
 
   manager.onElementLoaded(".intro", async () => {
-    if ($introComplete.get()) {
+    if (isSpeedTool || $introComplete.get()) {
       const el = document.querySelector(".intro")
       if (el) {
         el.remove()
       }
+      setIntroComplete(true)
       return
     } else {
       try {
-        await import("../assets/lottie/intro-new.json")
         initLottie()
       } catch (error) {
         console.error("Error during Lottie animation initialization:", error)

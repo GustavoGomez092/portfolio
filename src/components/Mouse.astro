@@ -42,7 +42,15 @@
   const hoverablesArea = document.querySelectorAll('.hoverableArea');
 
   // Listeners
-  document.body.addEventListener('mousemove', onMouseMove);
+  let ticking = false
+  document.body.addEventListener('mousemove', (e: MouseEvent) => {
+    if (ticking) return
+    ticking = true
+    requestAnimationFrame(() => {
+      onMouseMove(e)
+      ticking = false
+    })
+  });
 
   for (let i = 0; i < $hoverables.length; i++) {
     $hoverables[i].addEventListener('mouseenter', onMouseHover);

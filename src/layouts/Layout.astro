@@ -3,9 +3,6 @@ import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 import pretendard200 from "@fontsource/pretendard/files/pretendard-latin-200-normal.woff2?url";
 import pretendard400 from "@fontsource/pretendard/files/pretendard-latin-400-normal.woff2?url";
-import pretendard500 from "@fontsource/pretendard/files/pretendard-latin-500-normal.woff2?url";
-import pretendard700 from "@fontsource/pretendard/files/pretendard-latin-700-normal.woff2?url";
-import pretendard900 from "@fontsource/pretendard/files/pretendard-latin-900-normal.woff2?url";
 import Logo from "../assets/img/logo.svg?url";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
@@ -17,16 +14,21 @@ import Mouse from "../components/Mouse.astro";
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <ClientRouter />
     <link rel="icon" type="image/svg+xml" href={Logo} />
     <meta name="generator" content={Astro.generator} />
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="b7b22ced-ac21-4979-af52-ebc417013125"></script>
+    <meta name="description" content="Full Stack Developer portfolio showcasing web, mobile, and desktop applications. 10+ years of experience with JavaScript, TypeScript, React, and modern web technologies." />
+    <link rel="canonical" href={`${Astro.site}portfolio/`} />
+    <meta property="og:title" content="Gustavo Gomez - Full Stack Developer" />
+    <meta property="og:description" content="Full Stack Developer portfolio showcasing web, mobile, and desktop applications." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={`${Astro.site}portfolio/`} />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="preconnect" href="https://cloud.umami.is" />
+    <script type="text/partytown" src="https://cloud.umami.is/script.js" data-website-id="b7b22ced-ac21-4979-af52-ebc417013125"></script>
     <link rel="preload" href={pretendard200} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={pretendard400} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={pretendard500} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={pretendard700} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={pretendard900} as="font" type="font/woff2" crossorigin />
     <title>Gustavo Gomez - Full Stack Developer</title>
   </head>
   <body>
@@ -38,7 +40,6 @@ import Mouse from "../components/Mouse.astro";
         <slot />
         <Footer />
       </div>
-    </div>
     </div>
   </body>
 </html>
