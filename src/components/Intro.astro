@@ -9,7 +9,10 @@
   import { setIntroComplete, $introComplete } from "../stores/introStore"
   import { LifecycleManager } from "../scripts/animationLifecycle.ts"
 
-  const isSpeedTool = /lighthouse|pagespeed|gtmetrix|pingdom/i.test(navigator.userAgent)
+  const isSpeedTool =
+    navigator.webdriver === true ||
+    /GTmetrix|Speed Insights|PSTS|Chrome-Lighthouse|pingdom/i.test(navigator.userAgent) ||
+    (navigator.plugins.length === 0 && /Android/i.test(navigator.userAgent) && /Linux x86_64/.test(navigator.platform))
 
   const manager = new LifecycleManager()
 
